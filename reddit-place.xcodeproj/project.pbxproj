@@ -15,9 +15,11 @@
 		02543C5A280E67B0006F7089 /* Appwrite in Frameworks */ = {isa = PBXBuildFile; productRef = 02543C59280E67B0006F7089 /* Appwrite */; };
 		02543C5D280E67E1006F7089 /* SwiftyBeaver in Frameworks */ = {isa = PBXBuildFile; productRef = 02543C5C280E67E1006F7089 /* SwiftyBeaver */; };
 		02543C60280E6809006F7089 /* kconstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C5F280E6809006F7089 /* kconstants.swift */; };
-		02543C62280E771B006F7089 /* randomshit.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C61280E771B006F7089 /* randomshit.swift */; };
 		02543C64280E7AAD006F7089 /* GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C63280E7AAD006F7089 /* GestureHandler.swift */; };
 		02543C66280E7AC5006F7089 /* DeviceUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C65280E7AC5006F7089 /* DeviceUtil.swift */; };
+		02607DB9280FDB9400D488E8 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */; };
+		02607DBC280FDBFF00D488E8 /* PixelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBB280FDBFF00D488E8 /* PixelData.swift */; };
+		02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,9 +30,11 @@
 		02543C4E280E6426006F7089 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		02543C56280E6772006F7089 /* AppwriteUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppwriteUtils.swift; sourceTree = "<group>"; };
 		02543C5F280E6809006F7089 /* kconstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kconstants.swift; sourceTree = "<group>"; };
-		02543C61280E771B006F7089 /* randomshit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = randomshit.swift; sourceTree = "<group>"; };
 		02543C63280E7AAD006F7089 /* GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureHandler.swift; sourceTree = "<group>"; };
 		02543C65280E7AC5006F7089 /* DeviceUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtil.swift; sourceTree = "<group>"; };
+		02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
+		02607DBB280FDBFF00D488E8 /* PixelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelData.swift; sourceTree = "<group>"; };
+		02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +69,9 @@
 		02543C46280E6425006F7089 /* reddit-place */ = {
 			isa = PBXGroup;
 			children = (
-				02543C67280E922A006F7089 /* Shape */,
+				02607DBD280FDC6D00D488E8 /* Extensions */,
+				02607DBA280FDBF400D488E8 /* Model */,
+				02607DB7280FDB8100D488E8 /* ViewModel */,
 				02543C5E280E67FB006F7089 /* Utils */,
 				02543C55280E676A006F7089 /* App */,
 				02543C47280E6425006F7089 /* reddit_placeApp.swift */,
@@ -96,18 +102,34 @@
 			isa = PBXGroup;
 			children = (
 				02543C5F280E6809006F7089 /* kconstants.swift */,
-				02543C61280E771B006F7089 /* randomshit.swift */,
 				02543C63280E7AAD006F7089 /* GestureHandler.swift */,
 				02543C65280E7AC5006F7089 /* DeviceUtil.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
 		};
-		02543C67280E922A006F7089 /* Shape */ = {
+		02607DB7280FDB8100D488E8 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */,
 			);
-			path = Shape;
+			path = ViewModel;
+			sourceTree = "<group>";
+		};
+		02607DBA280FDBF400D488E8 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				02607DBB280FDBFF00D488E8 /* PixelData.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		02607DBD280FDC6D00D488E8 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -188,11 +210,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				02607DB9280FDB9400D488E8 /* CanvasViewModel.swift in Sources */,
+				02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */,
 				02543C66280E7AC5006F7089 /* DeviceUtil.swift in Sources */,
 				02543C57280E6772006F7089 /* AppwriteUtils.swift in Sources */,
-				02543C62280E771B006F7089 /* randomshit.swift in Sources */,
 				02543C64280E7AAD006F7089 /* GestureHandler.swift in Sources */,
 				02543C4A280E6425006F7089 /* ContentView.swift in Sources */,
+				02607DBC280FDBFF00D488E8 /* PixelData.swift in Sources */,
 				02543C48280E6425006F7089 /* reddit_placeApp.swift in Sources */,
 				02543C60280E6809006F7089 /* kconstants.swift in Sources */,
 			);

@@ -1,15 +1,14 @@
 //
-//  randomshit.swift
+//  PixelData.swift
 //  reddit-place
 //
-//  Created by chuy g on 18/04/22.
+//  Created by chuy g on 20/04/22.
 //
 
-import Foundation
-import CoreImage
 import UIKit
+import CoreImage
 
-public struct PixelData {
+struct PixelData {
     var a: UInt8
     var r: UInt8
     var g: UInt8
