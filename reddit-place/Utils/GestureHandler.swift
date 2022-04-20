@@ -44,6 +44,10 @@ final class GestureHandler: ObservableObject {
         self.scale = scale
         correctOffset()
     }
+    
+    func plusScale(scale: Double, maximum: Double) {
+        setScale(scale: scale, maximum: maximum)
+    }
 
     func onSingleTapGestureEnded(
 //        readingDirection: ReadingDirection,
@@ -65,6 +69,15 @@ final class GestureHandler: ObservableObject {
 //        } else {
 //            toggleShowsPanelAction()
 //        }
+    }
+    
+    func reset(scale: Double) {
+        let newScale = scale
+        if let point = TouchHandler.shared.currentPoint {
+            correctScaleAnchor(point: point)
+        }
+        setOffset(.zero)
+        setScale(scale: newScale, maximum: 1.0)
     }
 
     func onDoubleTapGestureEnded(scaleMaximum: Double, doubleTapScale: Double) {
