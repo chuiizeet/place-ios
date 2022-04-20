@@ -9,30 +9,29 @@ import SwiftUI
 
 struct ContentView: View {
     
+    // MARK: - Properties
+    
     var image: UIImage?
     
     @StateObject private var gestureHandler = GestureHandler()
-    
+
     init() {
-        let height = 4096
-        let width = 4096
-        
-        image = createRandomUIImage(width: width, height: height)
     }
     
     var body: some View {
         
-        if let image = image {
-            Image(uiImage: image)
-                .resizable()
-                .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.width)
-                .scaleEffect(gestureHandler.scale, anchor: gestureHandler.scaleAnchor)
-                            .offset(gestureHandler.offset).gesture(tapGesture).gesture(dragGesture)
-                            .gesture(magnificationGesture).ignoresSafeArea()
-                            .animation(.linear(duration: 0.1), value: gestureHandler.offset)
-                            .animation(.default, value: gestureHandler.scale)
-                            
+        ZStack {
+            Color.gray.brightness(0.5)
+                .ignoresSafeArea()
+            CanvasView()
+                .padding()
+                .frame(width: DeviceUtil.screenW, height: DeviceUtil.screenW, alignment: .center)
         }
+        .scaleEffect(gestureHandler.scale, anchor: gestureHandler.scaleAnchor)
+                    .offset(gestureHandler.offset).gesture(tapGesture).gesture(dragGesture)
+                    .gesture(magnificationGesture).ignoresSafeArea()
+                    .animation(.linear(duration: 0.1), value: gestureHandler.offset)
+                    .animation(.default, value: gestureHandler.scale)
     }
 }
 
@@ -46,8 +45,8 @@ extension ContentView {
         let doubleTap = TapGesture(count: 2)
             .onEnded {
                 gestureHandler.onDoubleTapGestureEnded(
-                    scaleMaximum: 8.0,
-                    doubleTapScale: 8.0
+                    scaleMaximum: 1.0,
+                    doubleTapScale: 1.0
                 )
             }
         return ExclusiveGesture(doubleTap, singleTap)
@@ -70,11 +69,4 @@ extension ContentView {
             .onChanged(gestureHandler.onDragGestureChanged)
             .onEnded(gestureHandler.onDragGestureEnded)
     }
-//    var controlPanelDismissGesture: some Gesture {
-//        DragGesture().onEnded {
-//            gestureHandler.onControlPanelDismissGestureEnded(
-//                value: $0, dismissAction: { viewStore.send(.onPerformDismiss) }
-//            )
-//        }
-//    }
 }

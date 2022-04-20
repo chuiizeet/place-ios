@@ -20,6 +20,7 @@
 		02607DB9280FDB9400D488E8 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */; };
 		02607DBC280FDBFF00D488E8 /* PixelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBB280FDBFF00D488E8 /* PixelData.swift */; };
 		02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */; };
+		02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DC1280FDD4100D488E8 /* CanvasView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
 		02607DBB280FDBFF00D488E8 /* PixelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelData.swift; sourceTree = "<group>"; };
 		02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		02607DC1280FDD4100D488E8 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -69,13 +71,13 @@
 		02543C46280E6425006F7089 /* reddit-place */ = {
 			isa = PBXGroup;
 			children = (
+				02607DC0280FDD2A00D488E8 /* View */,
 				02607DBD280FDC6D00D488E8 /* Extensions */,
 				02607DBA280FDBF400D488E8 /* Model */,
 				02607DB7280FDB8100D488E8 /* ViewModel */,
 				02543C5E280E67FB006F7089 /* Utils */,
 				02543C55280E676A006F7089 /* App */,
 				02543C47280E6425006F7089 /* reddit_placeApp.swift */,
-				02543C49280E6425006F7089 /* ContentView.swift */,
 				02543C4B280E6426006F7089 /* Assets.xcassets */,
 				02543C4D280E6426006F7089 /* Preview Content */,
 			);
@@ -130,6 +132,15 @@
 				02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		02607DC0280FDD2A00D488E8 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				02543C49280E6425006F7089 /* ContentView.swift */,
+				02607DC1280FDD4100D488E8 /* CanvasView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -212,6 +223,7 @@
 			files = (
 				02607DB9280FDB9400D488E8 /* CanvasViewModel.swift in Sources */,
 				02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */,
+				02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */,
 				02543C66280E7AC5006F7089 /* DeviceUtil.swift in Sources */,
 				02543C57280E6772006F7089 /* AppwriteUtils.swift in Sources */,
 				02543C64280E7AAD006F7089 /* GestureHandler.swift in Sources */,
