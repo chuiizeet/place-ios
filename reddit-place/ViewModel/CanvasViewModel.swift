@@ -14,7 +14,7 @@ class CanvasViewModel: ObservableObject {
     let canvasWidth = 256
     let canvasHeight = 256
     
-    private let canvasPixelFactor = 1
+    private let canvasPixelFactor = 4
     
     @Published var image: UIImage?
     @Published var pixelsImage: [PixelData] = [PixelData]()
@@ -164,8 +164,10 @@ class CanvasViewModel: ObservableObject {
 
         let pixelData = image.cgImage!.dataProvider!.data
         let _: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+        
+        let canvasWidthNormalize: Int = canvasWidth * canvasPixelFactor
 
-        let pixelIndex: Int = ((Int(canvasWidth) * y) + x)
+        let pixelIndex: Int = ((canvasWidthNormalize * y) + x)
         
         changeImage(pixel: pixelIndex)
         print(pixelIndex)
