@@ -11,69 +11,164 @@ class CanvasViewModel: ObservableObject {
     
     // MARK: - Properties
     /// The canvas properties hardcoded for test and demostration
-    private let canvasWidth = 256
-    private let canvasHeight = 256
+    let canvasWidth = 256
+    let canvasHeight = 256
     
-    private let canvasPixelFactor = 4
+    private let canvasPixelFactor = 1
     
     @Published var image: UIImage?
+    @Published var pixelsImage: [PixelData] = [PixelData]()
     
     init() {
-        image = createImage()
+        createImage { image, _ in
+            if let image = image {
+                DispatchQueue.main.async {
+                    self.image = image
+                }
+            }
+        }
+        
     }
     
     // MARK: - Helper Functions
     
-    private func createImage() -> UIImage? {
+    private func changeImage(pixel: Int) {
+        if let image = image {
+            self.image = processPixels(in: image, index: pixel)
+        } else {
+            Logger.warning("Image has not been processed yet")
+        }
+    }
+    
+    /// Create first image
+    private func createImage(completionHandler: @escaping (UIImage?, String?) -> Void){
         
-        let width = canvasWidth * canvasPixelFactor
-        let height = canvasHeight * canvasPixelFactor
+        guard canvasWidth > 0 && canvasHeight > 0 else { fatalError() }
+
         
-        var pixels = [PixelData]()
-        let rgbColorSpace = CGColorSpaceCreateDeviceRGB()
-        let bitmapInfo = CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedFirst.rawValue)
-        let bitsPerComponent = 8
-        let bitsPerPixel = 32
-        
-        var color = true
-        
-        for i in 0..<width {
-            if i % canvasPixelFactor == 0{
-                color.toggle()
+        DispatchQueue.global(qos: .utility).async {
+            let width = self.canvasWidth * self.canvasPixelFactor
+            let height = self.canvasHeight * self.canvasPixelFactor
+            let rgbColorSpace =     CGColorSpaceCreateDeviceRGB()
+            let bitmapInfo =        CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+            let bitsPerComponent =  8
+            let bitsPerPixel =      32
+            
+            var color = true
+            
+            var pixels = [PixelData]()
+            
+            if self.pixelsImage.isEmpty {
+                
+                for i in 0..<width {
+                    if i % self.canvasPixelFactor == 0{
+                        color.toggle()
+                    }
+                    for j in 0..<height {
+                        if j % self.canvasPixelFactor == 0{
+                            color.toggle()
+                        }
+                        if color {
+                            pixels.append(PixelData(r: 255, g: 0, b: 0, a: 255))
+                        } else {
+                            pixels.append(PixelData(r: 255, g: 255, b: 255, a: 255))
+                        }
+                    }
+                }
+                
+                DispatchQueue.main.async {
+                    self.pixelsImage = pixels
+                }
+            } else {
+                pixels = self.pixelsImage
             }
-            for j in 0..<height {
-                if j % canvasPixelFactor == 0{
-                    color.toggle()
-                }
-                if color {
-                    pixels.append(PixelData(a: 255, r: 255, g: 255, b: 255))
-                } else {
-                    pixels.append(PixelData(a: 255, r: 0, g: 0, b: 255))
-    //                            pixels.append(PixelData(a: .random(in: 0...255), r: .random(in: 0...255), g: .random(in: 0...255), b: .random(in: 0...255)))
-                }
+            
+            guard pixels.count == width * height else { fatalError() }
+
+            Logger.debug(pixels.count, context: pixels.count)
+            guard let providerRef = CGDataProvider(data: NSData(bytes: &pixels,
+                                    length: pixels.count * MemoryLayout<PixelData>.size)
+                )
+                else { return completionHandler(nil, "Error weird") }
+                            
+            guard let cgim = CGImage(
+                width: width,
+                height: height,
+                bitsPerComponent: bitsPerComponent,
+                bitsPerPixel: bitsPerPixel,
+                bytesPerRow: width * MemoryLayout<PixelData>.size,
+                space: rgbColorSpace,
+                bitmapInfo: bitmapInfo,
+                provider: providerRef,
+                decode: nil,
+                shouldInterpolate: true,
+                intent: .absoluteColorimetric
+                )
+                else { return completionHandler(nil, "Error weird") }
+//            let image = UIImage(cgImage: cgim, scale: UIScreen.main.scale, orientation: .up)
+            completionHandler(UIImage(cgImage: cgim), nil)
+        }
+    }
+    
+    /// Take and change the pixel in the image
+    func processPixels(in image: UIImage, index: Int) -> UIImage? {
+        guard let inputCGImage = image.cgImage else {
+            print("unable to get cgImage")
+            return nil
+        }
+        let colorSpace       = CGColorSpaceCreateDeviceRGB()
+        let width            = inputCGImage.width
+        let height           = inputCGImage.height
+        let bytesPerPixel    = 4
+        let bitsPerComponent = 8
+        let bytesPerRow      = bytesPerPixel * width
+        let bitmapInfo       = RGBA32.bitmapInfo
+
+        guard let context = CGContext(data: nil, width: width, height: height, bitsPerComponent: bitsPerComponent, bytesPerRow: bytesPerRow, space: colorSpace, bitmapInfo: bitmapInfo) else {
+            print("unable to create context")
+            return nil
+        }
+        context.draw(inputCGImage, in: CGRect(x: 0, y: 0, width: width, height: height))
+
+        guard let buffer = context.data else {
+            print("unable to get context data")
+            return nil
+        }
+
+        let pixelBuffer = buffer.bindMemory(to: RGBA32.self, capacity: width * height)
+
+        for row in 0 ..< Int(height) {
+            for column in 0 ..< Int(width) {
+                let offset = row * width + column
+                if offset == index {
+                    pixelBuffer[offset] = .blue
+                }                
             }
         }
 
-        guard let providerRef = CGDataProvider(data: NSData(bytes: &pixels,
-                                length: pixels.count * MemoryLayout<PixelData>.size)
-            )
-            else { return nil }
+        let outputCGImage = context.makeImage()!
+        let outputImage = UIImage(cgImage: outputCGImage, scale: image.scale, orientation: image.imageOrientation)
 
-        guard let cgim = CGImage(
-            width: width,
-            height: height,
-            bitsPerComponent: bitsPerComponent,
-            bitsPerPixel: bitsPerPixel,
-            bytesPerRow: width * MemoryLayout<PixelData>.size,
-            space: rgbColorSpace,
-            bitmapInfo: bitmapInfo,
-            provider: providerRef,
-            decode: nil,
-            shouldInterpolate: false,
-            intent: .absoluteColorimetric
-            )
-            else { return nil }
-        
-        return UIImage(cgImage: cgim)
+        return outputImage
     }
+    
+    /// Get the pixel index from user Touch location
+    func setNewPixelFromLocation(_ location: CGPoint) {
+        
+        let x: Int = Int(location.x)
+        let y: Int = Int(location.y)
+        guard let image = image else {
+            Logger.error("Image has not been processed yet")
+            return
+        }
+
+        let pixelData = image.cgImage!.dataProvider!.data
+        let _: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
+
+        let pixelIndex: Int = ((Int(canvasWidth) * y) + x)
+        
+        changeImage(pixel: pixelIndex)
+        print(pixelIndex)
+    }
+
 }

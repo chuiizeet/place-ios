@@ -12,30 +12,39 @@ struct ContentView: View {
     // MARK: - Properties
     
     @StateObject private var gestureHandler = GestureHandler()
+    @StateObject var viewModel = CanvasViewModel()
     
     private let baseScale: Double = 1.0
-    private let maxScale: Double = 8.0
-    private let scaleFactor: Double = 2.0
+    private let scaleFactor: Double = 4.0
+    private let maxScale: Double = 24
     
     var image: UIImage?
-    init() {
+    init() {        
     }
     
     var body: some View {
         
         ZStack {
             ZStack {
-                Color.gray.brightness(0.5)
+                Color.gray.brightness(0.33)
                     .ignoresSafeArea(.all)
-                CanvasView()
-                    .padding()
-                    .frame(width: DeviceUtil.screenW, height: DeviceUtil.screenW, alignment: .center)
+                
+                    CanvasView(viewModel: viewModel)
+                    .overlay(
+                        TappableView { gesture in
+                            viewModel.setNewPixelFromLocation(gesture.location(in: gesture.view))
+                    })
             }
             .scaleEffect(gestureHandler.scale, anchor: gestureHandler.scaleAnchor)
                         .offset(gestureHandler.offset).gesture(tapGesture).gesture(dragGesture)
                         .gesture(magnificationGesture).ignoresSafeArea()
                         .animation(.linear(duration: 0.1), value: gestureHandler.offset)
                         .animation(.default, value: gestureHandler.scale)
+            
+            // Pixels...
+//            Rectangle()
+//                .fill(Color.red)
+//                .frame(width: CGFloat(2.0).pixelsToPoints() * gestureHandler.scale, height: CGFloat(2.0).pixelsToPoints() * gestureHandler.scale)
             
             // Controls...
             VStack(alignment: .leading) {
@@ -73,6 +82,7 @@ struct ContentView: View {
                 .background(.thinMaterial)
                 .cornerRadius(12)
             }
+            .zIndex(1)
             .padding(.bottom, 32)
         }
     }

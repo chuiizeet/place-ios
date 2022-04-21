@@ -11,12 +11,12 @@ struct CanvasView: View {
     
     // MARK: - Properties
     
-    @StateObject var viewModel = CanvasViewModel()
+    @ObservedObject var viewModel: CanvasViewModel
     
     var body: some View {
         if let image = viewModel.image {
             Image(uiImage: image)
-                .resizable()
+                .scaledToFit()                
         } else {
             Color.black
         }
