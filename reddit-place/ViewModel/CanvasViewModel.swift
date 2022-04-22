@@ -14,7 +14,7 @@ class CanvasViewModel: ObservableObject {
     let canvasWidth = 256
     let canvasHeight = 256
     
-    private let canvasPixelFactor = 4
+    private let canvasPixelFactor = Int(UIScreen.main.scale) * 2
     
     @Published var image: UIImage?
     @Published var pixelsImage: [PixelData] = [PixelData]()

@@ -22,6 +22,7 @@
 		02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */; };
 		02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DC1280FDD4100D488E8 /* CanvasView.swift */; };
 		0288564728112729004BD018 /* TappableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288564628112729004BD018 /* TappableView.swift */; };
+		02DE877328126FA3004FEB09 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DE877228126FA3004FEB09 /* WebView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,7 @@
 		02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		02607DC1280FDD4100D488E8 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		0288564628112729004BD018 /* TappableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableView.swift; sourceTree = "<group>"; };
+		02DE877228126FA3004FEB09 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,10 +142,19 @@
 		02607DC0280FDD2A00D488E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				02DE877128126F8E004FEB09 /* Canvas */,
 				02543C49280E6425006F7089 /* ContentView.swift */,
 				02607DC1280FDD4100D488E8 /* CanvasView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		02DE877128126F8E004FEB09 /* Canvas */ = {
+			isa = PBXGroup;
+			children = (
+				02DE877228126FA3004FEB09 /* WebView.swift */,
+			);
+			path = Canvas;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,6 +244,7 @@
 				02543C4A280E6425006F7089 /* ContentView.swift in Sources */,
 				02607DBC280FDBFF00D488E8 /* PixelData.swift in Sources */,
 				02543C48280E6425006F7089 /* reddit_placeApp.swift in Sources */,
+				02DE877328126FA3004FEB09 /* WebView.swift in Sources */,
 				02543C60280E6809006F7089 /* kconstants.swift in Sources */,
 				0288564728112729004BD018 /* TappableView.swift in Sources */,
 			);
