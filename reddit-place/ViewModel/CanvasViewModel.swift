@@ -11,10 +11,19 @@ class CanvasViewModel: ObservableObject {
     
     // MARK: - Properties
     /// The canvas properties hardcoded for test and demostration
-    let canvasWidth = 256
-    let canvasHeight = 256
+    let canvasWidth: Int = 256
+    let canvasHeight: Int = 256
     
-    private let canvasPixelFactor = Int(UIScreen.main.scale) * 2
+    let canvasPixelFactor: Int = Int(UIScreen.main.scale) + 2
+    
+    /// Computed canvas size
+    var canvasWidthComputed: CGFloat {
+        return CGFloat(canvasWidth * canvasPixelFactor)
+    }
+    
+    var canvasHeightComputed: CGFloat {
+        return CGFloat(canvasWidth * canvasPixelFactor)
+    }
     
     @Published var image: UIImage?
     @Published var pixelsImage: [PixelData] = [PixelData]()
@@ -85,7 +94,7 @@ class CanvasViewModel: ObservableObject {
             
             guard pixels.count == width * height else { fatalError() }
 
-            Logger.debug(pixels.count, context: pixels.count)
+            Logger.debug("Total pixels: \(pixels.count)", context: pixels.count)
             guard let providerRef = CGDataProvider(data: NSData(bytes: &pixels,
                                     length: pixels.count * MemoryLayout<PixelData>.size)
                 )
