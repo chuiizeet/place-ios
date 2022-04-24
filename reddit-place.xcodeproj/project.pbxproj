@@ -18,7 +18,7 @@
 		02543C64280E7AAD006F7089 /* GestureHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C63280E7AAD006F7089 /* GestureHandler.swift */; };
 		02543C66280E7AC5006F7089 /* DeviceUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C65280E7AC5006F7089 /* DeviceUtil.swift */; };
 		02607DB9280FDB9400D488E8 /* CanvasViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */; };
-		02607DBC280FDBFF00D488E8 /* PixelData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBB280FDBFF00D488E8 /* PixelData.swift */; };
+		02607DBC280FDBFF00D488E8 /* Pixel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBB280FDBFF00D488E8 /* Pixel.swift */; };
 		02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */; };
 		02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DC1280FDD4100D488E8 /* CanvasView.swift */; };
 		0288564728112729004BD018 /* TappableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288564628112729004BD018 /* TappableView.swift */; };
@@ -36,7 +36,7 @@
 		02543C63280E7AAD006F7089 /* GestureHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GestureHandler.swift; sourceTree = "<group>"; };
 		02543C65280E7AC5006F7089 /* DeviceUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceUtil.swift; sourceTree = "<group>"; };
 		02607DB8280FDB9400D488E8 /* CanvasViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModel.swift; sourceTree = "<group>"; };
-		02607DBB280FDBFF00D488E8 /* PixelData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelData.swift; sourceTree = "<group>"; };
+		02607DBB280FDBFF00D488E8 /* Pixel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pixel.swift; sourceTree = "<group>"; };
 		02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		02607DC1280FDD4100D488E8 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		0288564628112729004BD018 /* TappableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableView.swift; sourceTree = "<group>"; };
@@ -126,7 +126,7 @@
 		02607DBA280FDBF400D488E8 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				02607DBB280FDBFF00D488E8 /* PixelData.swift */,
+				02607DBB280FDBFF00D488E8 /* Pixel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -250,7 +250,7 @@
 				02543C57280E6772006F7089 /* AppwriteUtils.swift in Sources */,
 				02543C64280E7AAD006F7089 /* GestureHandler.swift in Sources */,
 				02543C4A280E6425006F7089 /* ContentView.swift in Sources */,
-				02607DBC280FDBFF00D488E8 /* PixelData.swift in Sources */,
+				02607DBC280FDBFF00D488E8 /* Pixel.swift in Sources */,
 				02543C48280E6425006F7089 /* reddit_placeApp.swift in Sources */,
 				02DE877328126FA3004FEB09 /* WebView.swift in Sources */,
 				02543C60280E6809006F7089 /* kconstants.swift in Sources */,

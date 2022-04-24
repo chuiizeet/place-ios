@@ -12,16 +12,7 @@ struct CanvasView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: CanvasViewModel
-    //    let webView: WebView = WebView(web: nil)
     
-    // Bezier properties
-    //    var gridWidthMultiple: CGFloat {
-    //        return 10
-    //    }
-    //    var gridHeightMultiple : CGFloat {
-    //        return 20
-    //    }
-    //
     var gridWidth: CGFloat {
         return DeviceUtil.screenW/CGFloat(viewModel.canvasWidth)
     }

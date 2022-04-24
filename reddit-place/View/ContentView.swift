@@ -34,15 +34,11 @@ struct ContentView: View {
                     CanvasView(viewModel: viewModel)
                     .overlay(
                         TappableView { gesture in
-                            viewModel.setNewPixelFromLocation(gesture.location(in: gesture.view))
+                            viewModel.computedCoords(location: gesture.location(in: gesture.view))
+//                            viewModel.setNewPixelFromLocation(gesture.location(in: gesture.view))
                     })
             
-            
-            // Pixels...
-//            Rectangle()
-//                .fill(Color.red)
-//                .frame(width: CGFloat(2.0).pixelsToPoints() * gestureHandler.scale, height: CGFloat(2.0).pixelsToPoints() * gestureHandler.scale)
-            
+            // MARK: - TODO: Layout this
             // Controls...
             VStack(alignment: .center) {
                 Spacer()
