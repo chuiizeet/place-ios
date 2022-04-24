@@ -12,19 +12,16 @@ struct CanvasView: View {
     // MARK: - Properties
     
     @ObservedObject var viewModel: CanvasViewModel
+    @Binding var currentScale: Double
+    var maxScale: Double
     
-    var gridWidth: CGFloat {
-        return DeviceUtil.screenW/CGFloat(viewModel.canvasWidth)
-    }
+    @State private var overlayOpacity: Double = 0.0
     
-    var gridHeight: CGFloat {
-        return DeviceUtil.screenH/CGFloat(viewModel.canvasHeight)
-    }
-    
-    init(viewModel: CanvasViewModel) {
+    init(viewModel: CanvasViewModel, currentScale: Binding<Double>, maxScale: Double) {
         self.viewModel = viewModel
+        self.maxScale = maxScale
+        _currentScale = currentScale
     }
-    
     
     var body: some View {
         if let image = viewModel.image {
@@ -34,8 +31,7 @@ struct CanvasView: View {
                     Path { path in
                         let pxFactor: CGFloat = CGFloat(viewModel.canvasPixelFactor)
                         
-                        for index in 1...Int(viewModel.canvasWidth) - 1
-                        {
+                        for index in 1...Int(viewModel.canvasWidth) - 1 {
                             let start = CGPoint(x: CGFloat(index) * pxFactor, y: 0)
                             let end = CGPoint(x: CGFloat(index) * pxFactor, y: viewModel.canvasHeightComputed)
                             path.move(to: start)
@@ -53,9 +49,23 @@ struct CanvasView: View {
                         path.closeSubpath()
                         
                     }
-                    // MARK: TODO - play with opacity + scale
-                        .stroke(.black.opacity(1.0), style: StrokeStyle(lineWidth: CGFloat(Double(viewModel.canvasPixelFactor)/2).pixelsToPoints(), lineCap: .round, lineJoin: .round))
+                        .stroke(.black.opacity(overlayOpacity), style: StrokeStyle(lineWidth: CGFloat(Double(viewModel.canvasPixelFactor)/2).pixelsToPoints(), lineCap: .round, lineJoin: .round))
+                        .animation(.easeInOut(duration: 0.1), value: overlayOpacity)
                 )
+                .onChange(of: currentScale) { newValue in
+                    let maxValue = 1.0
+                    let op = newValue/maxScale
+                    let factor = 0.175
+                    withAnimation {
+                        if op <= factor {
+                            overlayOpacity = 0
+                        } else if op >= 0.75 {
+                            overlayOpacity = maxValue
+                        } else {
+                            overlayOpacity = (op - (factor/2))
+                        }
+                    }
+                }
         } else {
             Color.black
         }

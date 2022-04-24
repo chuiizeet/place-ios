@@ -16,13 +16,13 @@ struct ContentView: View {
     
     private let baseScale: Double = 1.0
     private let scaleFactor: Double = 2.0
-    private let maxScale: Double = 24
+    private let maxScale: Double = 20.0
     
     @State var offset: CGSize = .zero
     @State private var accumulated = CGSize.zero
     
     var image: UIImage?
-    init() {        
+    init() {
     }
     
     var body: some View {
@@ -31,11 +31,11 @@ struct ContentView: View {
             Color.gray.brightness(0.33)
                 .ignoresSafeArea(.all)
             
-                    CanvasView(viewModel: viewModel)
-                    .overlay(
-                        TappableView { gesture in
-                            viewModel.computedCoords(location: gesture.location(in: gesture.view))
-//                            viewModel.setNewPixelFromLocation(gesture.location(in: gesture.view))
+            CanvasView(viewModel: viewModel, currentScale: $gestureHandler.scale, maxScale: maxScale)
+                .overlay(
+                    TappableView { gesture in
+                        viewModel.computedCoords(location: gesture.location(in: gesture.view))
+                        //                            viewModel.setNewPixelFromLocation(gesture.location(in: gesture.view))
                     })
             
             // MARK: - TODO: Layout this
@@ -80,10 +80,10 @@ struct ContentView: View {
         }
         .frame(width: CGFloat(viewModel.canvasWidth) * 16, height: CGFloat(viewModel.canvasWidth) * 16)
         .scaleEffect(gestureHandler.scale, anchor: gestureHandler.scaleAnchor)
-                    .offset(offset).gesture(tapGesture) // .gesture(dragGesture)
-                    .gesture(magnificationGesture).ignoresSafeArea()
-                    .animation(.linear(duration: 0.1), value: gestureHandler.offset)
-                    .animation(.default, value: gestureHandler.scale)
+        .offset(offset).gesture(tapGesture) // .gesture(dragGesture)
+        .gesture(magnificationGesture).ignoresSafeArea()
+        .animation(.linear(duration: 0.1), value: gestureHandler.offset)
+        .animation(.default, value: gestureHandler.scale)
         .simultaneousGesture(
             DragGesture()
                 .onChanged { value in
@@ -92,7 +92,7 @@ struct ContentView: View {
                 .onEnded { value in
                     offset = CGSize(width: value.translation.width + self.accumulated.width, height: value.translation.height + self.accumulated.height)
                     accumulated = offset
-//
+                    //
                 }
         )
     }
