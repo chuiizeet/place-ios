@@ -11,8 +11,8 @@ class CanvasViewModel: ObservableObject {
     
     // MARK: - Properties
     /// The canvas properties hardcoded for test and demostration
-    let canvasWidth: Int = 256
-    let canvasHeight: Int = 256
+    let canvasWidth: Int = 500
+    let canvasHeight: Int = 500
     
     let canvasPixelFactor: Int = Int(UIScreen.main.scale) + 2
     
