@@ -15,7 +15,7 @@ class AppwriteUtils {
     private let log = SwiftyBeaver.self
     static let shared = AppwriteUtils()
 
-    let client: Client
+    private let client: Client
     let account: Account
     let db: Database
     let functions: Functions

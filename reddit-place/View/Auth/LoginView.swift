@@ -11,10 +11,10 @@ struct LoginView: View {
     
     // MARK: - Properties
     
-    @State var email: String = ""
-    @State var password: String = ""
+    @ObservedObject var viewModel: ValidationViewModel
     
     @State var showSignUp = false
+    @State var showMessages = false
     
     var imageSize: CGFloat {
         return DeviceUtil.screenW * 0.5
@@ -22,7 +22,7 @@ struct LoginView: View {
     
     var body: some View {
         NavigationView {
-            ScrollView {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     
                     // NavigationLinks
@@ -39,26 +39,43 @@ struct LoginView: View {
                     Text("Email")
                         .font(.callout)
                         .bold()
-                    TextField("user@email.com", text: $email)
+                    TextField("user@email.com", text: $viewModel.email)
+                        .keyboardType(.emailAddress)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding(.bottom)
                         .font(.body)
+                    if showMessages && !viewModel.isEmailValid() {
+                        Text("Enter a valid email")
+                            .font(.callout)
+                            .foregroundColor(.red)
+                    }
                     
                     Text("Password")
                         .font(.callout)
                         .bold()
                         .padding(.top)
-                    SecureField("Password", text: $password)
+                    SecureField("Password", text: $viewModel.password)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .font(.body)
+                    if showMessages && !viewModel.isPasswordLength() {
+                        Text("Password must be length than 8")
+                            .font(.callout)
+                            .foregroundColor(.red)
+                    }
                     
                     Button {
-                        // Login...
+                        if !viewModel.isLoginComplete() {
+                            showMessages = true
+                        } else {
+                            Task {
+                                await viewModel.signIn()
+                            }
+                        }
                     } label: {
                         HStack {
                             Spacer()
                             Text("Sign in")
                                 .font(.title2.bold())
+                                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                             Spacer()
                         }
                     }
@@ -67,6 +84,7 @@ struct LoginView: View {
                     .controlSize(.large)
                     .buttonStyle(.borderedProminent)
                     .padding(.vertical)
+                    .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                     
                     HStack(alignment: .center, spacing: 4) {
                         Spacer()
@@ -96,7 +114,7 @@ struct LoginView: View {
     
     @ViewBuilder func navigationLinks() -> some View {
         NavigationLink(isActive: $showSignUp) {
-            SignUpView(showSignUp: $showSignUp)
+            SignUpView(viewModel: viewModel, showSignUp: $showSignUp)
         } label: {
             EmptyView()
         }

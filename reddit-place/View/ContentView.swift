@@ -12,7 +12,8 @@ struct ContentView: View {
     // MARK: - Properties
     
     @StateObject private var gestureHandler = GestureHandler()
-    @StateObject var viewModel = CanvasViewModel()
+    @StateObject private var viewModel = CanvasViewModel()
+    @StateObject private var authViewModel = ValidationViewModel()
     
     private let baseScale: Double = 1.0
     private let scaleFactor: Double = 2.0
@@ -100,8 +101,11 @@ struct ContentView: View {
                 //dismiss
             } content: {
                 //content
-                LoginView()
+                LoginView(viewModel: authViewModel)
             }
+        }
+        .task {
+            await authViewModel.getSessions()
         }
     }
 }

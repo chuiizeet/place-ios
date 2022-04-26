@@ -79,7 +79,7 @@ class CanvasViewModel: ObservableObject {
             let width = self.canvasWidth * self.canvasPixelFactor
             let height = self.canvasHeight * self.canvasPixelFactor
             let rgbColorSpace =     CGColorSpaceCreateDeviceRGB()
-            let bitmapInfo =        CGBitmapInfo(rawValue: CGImageAlphaInfo.none.rawValue)
+            let bitmapInfo =        CGBitmapInfo(rawValue: CGImageAlphaInfo.premultipliedLast.rawValue) // premultipliedLast or .none
             let bitsPerComponent =  8
             let bitsPerPixel =      32
             

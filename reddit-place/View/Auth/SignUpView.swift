@@ -11,47 +11,62 @@ struct SignUpView: View {
     
     // MARK: - Properties
     
-    @State var name: String = ""
-    @State var email: String = ""
-    @State var password: String = ""
+    @ObservedObject var viewModel: ValidationViewModel
     
     @Binding var showSignUp: Bool
+    @State var showMessages = false
     
     var body: some View {
-        ScrollView {
+        ScrollView(showsIndicators: false) {
             VStack(alignment: .leading) {
                 
-                Text("Name")
+                Text("Nickname (optional)")
                     .font(.callout)
                     .bold()
-                TextField("User", text: $email)
+                TextField("0xChuy.guerra 🐛", text: $viewModel.nickname)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.bottom)
                     .font(.body)
                 
                 Text("Email")
                     .font(.callout)
                     .bold()
-                TextField("user@email.com", text: $email)
+                TextField("user@email.com", text: $viewModel.email)
+                    .keyboardType(.emailAddress)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
-                    .padding(.bottom)
                     .font(.body)
+                if showMessages && !viewModel.isEmailValid() {
+                    Text("Enter a valid email")
+                        .font(.callout)
+                        .foregroundColor(.red)
+                        .padding(.bottom)
+                }
                 
                 Text("Password")
                     .font(.callout)
                     .bold()
-                SecureField("Password", text: $password)
+                SecureField("Password", text: $viewModel.password)
                     .textFieldStyle(RoundedBorderTextFieldStyle())
                     .font(.body)
-                    .padding(.bottom)
+                if showMessages && !viewModel.isPasswordLength() {
+                    Text("Password must be length than 8")
+                        .font(.callout)
+                        .foregroundColor(.red)
+                }
                 
                 Button {
-                    // Login...
+                    if !viewModel.isSignUpComplete() {
+                        showMessages = true
+                    } else {
+                        Task {
+                            await viewModel.signUp()
+                        }                        
+                    }
                 } label: {
                     HStack {
                         Spacer()
                         Text("Sign Up")
                             .font(.title2.bold())
+                            .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                         Spacer()
                     }
                 }
@@ -59,6 +74,7 @@ struct SignUpView: View {
                 .foregroundColor(Color(.systemBackground))
                 .controlSize(.large)
                 .buttonStyle(.borderedProminent)
+                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                 .padding(.vertical)
                 
                 HStack(alignment: .center, spacing: 4) {
