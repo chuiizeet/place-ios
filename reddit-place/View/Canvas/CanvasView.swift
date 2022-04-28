@@ -50,13 +50,14 @@ struct CanvasView: View {
                         
                     }
                         .stroke(.black.opacity(overlayOpacity), style: StrokeStyle(lineWidth: CGFloat(Double(viewModel.canvasPixelFactor)/2).pixelsToPoints(), lineCap: .round, lineJoin: .round))
-                        .animation(.easeInOut(duration: 0.1), value: overlayOpacity)
+//                        .animation(.easeInOut(duration: 0.1), value: overlayOpacity)
                 )
+            // MARK: - This looks weird, maybe remove animation
                 .onChange(of: currentScale) { newValue in
                     let maxValue = 1.0
                     let op = newValue/maxScale
                     let factor = 0.175
-                    withAnimation {
+//                    withAnimation {
                         if op <= factor {
                             overlayOpacity = 0
                         } else if op >= 0.75 {
@@ -64,7 +65,7 @@ struct CanvasView: View {
                         } else {
                             overlayOpacity = (op - (factor/2))
                         }
-                    }
+//                    }
                 }
         } else {
             Color.black

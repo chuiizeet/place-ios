@@ -9,10 +9,13 @@ import SwiftUI
 
 final class GestureHandler: ObservableObject {
     @Published var scaleAnchor: UnitPoint = .center
-    @Published var scale: Double = 1
+    @Published var scale: Double = 0.25
     @Published var offset: CGSize = .zero
     @Published private var baseScale: Double = 1
     @Published private var newOffset: CGSize = .zero
+    
+    private var minimumScale: Double = 0.235
+    private var initScale: Double = 0.25
 
     private func edgeWidth(x: Double) -> Double {
         let marginW = DeviceUtil.absWindowW * (scale - 1) / 2
@@ -40,9 +43,8 @@ final class GestureHandler: ObservableObject {
         correctOffset()
     }
     private func setScale(scale: Double, maximum: Double) {
-        guard scale >= 1 && scale <= maximum else { return }
+        guard scale >= minimumScale && scale <= maximum else { return }
         self.scale = scale
-        correctOffset()
     }
     
     func plusScale(scale: Double, maximum: Double) {
@@ -71,13 +73,9 @@ final class GestureHandler: ObservableObject {
 //        }
     }
     
-    func reset(scale: Double) {
-        let newScale = scale
-        if let point = TouchHandler.shared.currentPoint {
-            correctScaleAnchor(point: point)
-        }
-        setOffset(.zero)
-        setScale(scale: newScale, maximum: 1.0)
+    func reset() {
+        offset = .zero
+        setScale(scale: initScale, maximum: 1.0)
     }
 
     func onDoubleTapGestureEnded(scaleMaximum: Double, doubleTapScale: Double) {
@@ -90,21 +88,15 @@ final class GestureHandler: ObservableObject {
     }
 
     func onMagnificationGestureChanged(value: Double, scaleMaximum: Double) {
-        if value == 1 {
-            baseScale = scale
-        }
-        if let point = TouchHandler.shared.currentPoint {
-            correctScaleAnchor(point: point)
-        }
         setScale(scale: value * baseScale, maximum: scaleMaximum)
     }
 
     func onMagnificationGestureEnded(value: Double, scaleMaximum: Double) {
         onMagnificationGestureChanged(value: value, scaleMaximum: scaleMaximum)
-        if value * baseScale - 1 < 0.01 {
-            setScale(scale: 1, maximum: scaleMaximum)
-        }
-        baseScale = scale
+//        if value * baseScale - 1 < 0.01 {
+//            setScale(scale: 1, maximum: scaleMaximum)
+//        }
+//        baseScale = scale
     }
 
     func onDragGestureChanged(value: DragGesture.Value) {

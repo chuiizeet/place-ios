@@ -11,8 +11,8 @@ class CanvasViewModel: ObservableObject {
     
     // MARK: - Properties
     /// The canvas properties hardcoded for test and demostration
-    let canvasWidth: Int = 500
-    let canvasHeight: Int = 500
+    let canvasWidth: Int = 256
+    let canvasHeight: Int = 256
     
     let canvasPixelFactor: Int = Int(UIScreen.main.scale) + 2
     
@@ -44,8 +44,7 @@ class CanvasViewModel: ObservableObject {
     func computedCoords(location: CGPoint, hex: String = "#f02e65") {
         let x = Int(ceil((location.x / CGFloat(canvasPixelFactor))))
         let y = Int(ceil((location.y / CGFloat(canvasPixelFactor))))
-        Logger.debug("x:\(x) y: \(y)", context: nil)
-        
+        Logger.debug("x:\(x) y: \(y)", context:nil)
         
         let startXPx = x > 0 ? Int((x-1) * canvasPixelFactor) : 1
         let endXPx = Int(x * canvasPixelFactor)
@@ -59,6 +58,7 @@ class CanvasViewModel: ObservableObject {
                 pixelsArray[offset] = Pixel(hexString: hex)
             }
         }
+        
         // Recreate image
         createImage { image, _ in
             if let image = image {
@@ -86,7 +86,7 @@ class CanvasViewModel: ObservableObject {
             var color = true
             
             var pixels = [Pixel]()
-            // Create first image
+            
             if self.pixelsArray.isEmpty {
                 
                 for i in 0..<width {
@@ -100,6 +100,7 @@ class CanvasViewModel: ObservableObject {
                         if color {
                             pixels.append(Pixel(r: 255, g: 255, b: 255, a: 255))
                         } else {
+//                            pixels.append(Pixel(r: 255, g: 0, b: 0, a: 255))
                             pixels.append(Pixel(r: 222, g: 222, b: 222, a: 255))
                         }
                     }

@@ -34,7 +34,7 @@ struct reddit_placeApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            HomeView()
         }
     }
 }
