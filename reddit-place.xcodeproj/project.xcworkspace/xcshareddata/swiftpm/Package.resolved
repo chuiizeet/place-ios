@@ -11,11 +11,11 @@
         }
       },
       {
-        "package": "Appwrite",
-        "repositoryURL": "https://github.com/appwrite/sdk-for-apple",
+        "package": "Popovers",
+        "repositoryURL": "https://github.com/aheze/Popovers",
         "state": {
-          "branch": "master",
-          "revision": "77d6edb52febd6a2e3390134f84b5da3a5256e4e",
+          "branch": "main",
+          "revision": "a845bdf8bf04e6e165f475d462d630974c0c1cce",
           "version": null
         }
       },

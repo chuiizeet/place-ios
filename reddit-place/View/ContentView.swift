@@ -19,6 +19,7 @@ struct ContentView: View {
     @StateObject private var gestureHandler = GestureHandler()
     @StateObject private var viewModel = CanvasViewModel()
     @StateObject private var authViewModel = ValidationViewModel()
+    @StateObject private var colorViewModel = ColorViewModel()    
     
     private let baseScale: Double = 0.15
     private let scaleFactor: Double = 1.0
@@ -53,7 +54,6 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                // MARK: - TODO: Layout this
                 // Controls...
                 VStack {
                     HStack {
@@ -69,7 +69,7 @@ struct ContentView: View {
                                 .overlay(
                                     Image(systemName: "arrow.up.left.and.down.right.magnifyingglass")
                                         .resizable()
-                                        .foregroundColor(Color.red)
+                                        .foregroundColor(Color.black)
                                         .frame(width: buttonImageSize, height: buttonImageSize)
                                     
                                     , alignment: .center
@@ -85,28 +85,20 @@ struct ContentView: View {
                             // Get color
                             Logger.debug("Get color", context: nil)
                         }) {
-                            Circle()
-                                .fill(Color.white)
-                                .frame(width: buttonSize, height: buttonSize)
-                                .shadow(color: Color.black.opacity(0.15), radius: 1.25, x: 1, y: 1)
-                                .overlay(
-                                    Circle()
-                                        .fill(Color.red, strokeBorder: Color.black, lineWidth: 2.5)
-                                        .frame(width: buttonColorSize, height: buttonColorSize)
-                                    
-                                    , alignment: .center
-                                )
+                            ColorView(viewModel: colorViewModel, buttonSize: buttonSize, buttonColorSize: buttonColorSize)
                         }
                         Spacer()
                         
                         Button {
-                            //...
+                            // .. Scale
+                            
+                            // .. Press a pixel
                         } label: {
                             Text("Color a pixel")
                                 .font(.title3.bold())
                         }
-                        .tint(.red)
-                        .foregroundColor(.white)
+                        .tint(colorViewModel.color)
+                        .foregroundColor(colorViewModel.bgColor)
                         .buttonStyle(.borderedProminent)
                         .controlSize(.large) // .large, .medium or .small
                         
@@ -125,7 +117,7 @@ struct ContentView: View {
                                 .overlay(
                                     Image(systemName: "plus.magnifyingglass")
                                         .resizable()
-                                        .foregroundColor(Color.red)
+                                        .foregroundColor(Color.black)
                                         .frame(width: buttonImageSize, height: buttonImageSize)
                                     
                                     , alignment: .center
@@ -143,7 +135,7 @@ struct ContentView: View {
                                 .overlay(
                                     Image(systemName: "minus.magnifyingglass")
                                         .resizable()
-                                        .foregroundColor(Color.red)
+                                        .foregroundColor(Color.black)
                                         .frame(width: buttonImageSize, height: buttonImageSize)
                                     
                                     , alignment: .center
@@ -241,60 +233,5 @@ extension ContentView {
         DragGesture(minimumDistance: .zero, coordinateSpace: .local)
             .onChanged(gestureHandler.onDragGestureChanged)
             .onEnded(gestureHandler.onDragGestureEnded)
-    }
-}
-
-/*
- VStack {
- Spacer()
- HStack(alignment: .center, spacing: 16) {
- Group {
- // -----
- Button {
- gestureHandler.plusScale(scale: gestureHandler.scale - scaleFactor, maximum: maxScale)
- } label: {
- Image(systemName: "minus.magnifyingglass")
- .font(.system(size: 32))
- }
- // Reset
- Button {
- withAnimation{
- gestureHandler.reset(scale: baseScale)
- }
- } label: {
- Image(systemName: "arrow.up.left.and.down.right.magnifyingglass")
- .font(.system(size: 32))
- }
- // ++++
- Button {
- gestureHandler.plusScale(scale: gestureHandler.scale + scaleFactor, maximum: maxScale)
- } label: {
- Image(systemName: "plus.magnifyingglass")
- .font(.system(size: 32))
- }
- }
- .padding()
- .foregroundColor(Color(.label))
- }
- .frame(height: 66)
- .background(.thinMaterial)
- .cornerRadius(12)
- }
- .zIndex(2)
- */
-
-extension Shape {
-    func fill<Fill: ShapeStyle, Stroke: ShapeStyle>(_ fillStyle: Fill, strokeBorder strokeStyle: Stroke, lineWidth: CGFloat = 1) -> some View {
-        self
-            .stroke(strokeStyle, lineWidth: lineWidth)
-            .background(self.fill(fillStyle))
-    }
-}
-
-extension InsettableShape {
-    func fill<Fill: ShapeStyle, Stroke: ShapeStyle>(_ fillStyle: Fill, strokeBorder strokeStyle: Stroke, lineWidth: CGFloat = 1) -> some View {
-        self
-            .strokeBorder(strokeStyle, lineWidth: lineWidth)
-            .background(self.fill(fillStyle))
     }
 }
