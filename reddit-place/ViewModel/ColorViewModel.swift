@@ -31,7 +31,7 @@ enum ColorsAllowed: CaseIterable {
         case .lowgray:
             return "#C2C3C7"
         case .white:
-            return "#FFF1E8"
+            return "#FFFFFF"
         case .red:
             return "#FF004D"
         case .orange:
