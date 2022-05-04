@@ -8,6 +8,13 @@
 import SwiftUI
 import Appwrite
 
+enum PixelPlaceCase {
+    case idle
+    case placed
+    case time
+    case error
+}
+
 enum FetchError: Error {
     case empty
 }
@@ -68,7 +75,7 @@ class CanvasViewModel: ObservableObject {
             let queries = [Query.greater("createdAt", value: file.createdAt)]
             
             // TODO: - Enhance this
-            let dbResult = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionID, queries: queries, limit: 100, offset: nil, cursor: nil, cursorDirection: nil, orderAttributes: nil, orderTypes: nil)
+            let dbResult = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionId, queries: queries, limit: 100, offset: nil, cursor: nil, cursorDirection: nil, orderAttributes: nil, orderTypes: nil)
             
             for doc in dbResult.documents {
                 DispatchQueue.main.async {
@@ -94,6 +101,52 @@ class CanvasViewModel: ObservableObject {
             // Show error message
         }
         
+    }
+    
+    func colorAPixel(location: CGPoint, hex: String) async -> PixelPlaceCase {
+        let x = Int(ceil((location.x / CGFloat(canvasPixelFactor))))
+        let y = Int(ceil((location.y / CGFloat(canvasPixelFactor))))
+        var pixelCase = PixelPlaceCase.idle
+        do {
+            
+            // Create data
+            let dict: [String: Any] = [
+                        "x": x,
+                        "y": y,
+                        "hex": hex,
+                    ]
+            
+            let jsonData = try JSONSerialization.data(withJSONObject: dict, options: [])
+            let data = String(data: jsonData, encoding: .utf8)!
+            
+            let result = try await AppwriteUtils.shared.functions.createExecution(functionId: K.Appwrite.pixelColorFunctionId, data: data, async: false)
+            
+            Logger.debug(result.stdout, context: nil)
+            
+            if result.statusCode == 200 {
+                if let resultDict = convertToDictionary(text: result.stdout) {
+                    if let success = resultDict["success"] as? Bool {
+                        if success {
+                            pixelCase = .placed
+                        } else {                            
+                            pixelCase = .time
+                        }
+                    } else {
+                        pixelCase = .error
+                    }
+                } else {
+                    pixelCase = .error
+                }
+            }
+            
+        } catch {
+            if let err = error as? Appwrite.AppwriteError {
+                Logger.error(err.message, context: nil)
+            } else {
+                Logger.error(error.localizedDescription, context: nil)
+            }
+        }
+        return pixelCase
     }
     
     func computedCoords(location: CGPoint, hex: String, create: Bool = true) {
@@ -235,4 +288,15 @@ struct FileLoader {
         let decoder = JSONDecoder()
         return try decoder.decode(Pixelfile.self, from: data)
     }
+}
+
+func convertToDictionary(text: String) -> [String: Any]? {
+    if let data = text.data(using: .utf8) {
+        do {
+            return try JSONSerialization.jsonObject(with: data, options: []) as? [String: Any]
+        } catch {
+            print(error.localizedDescription)
+        }
+    }
+    return nil
 }

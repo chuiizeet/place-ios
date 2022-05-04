@@ -13,6 +13,7 @@ struct K {
         static let projectId = "625e2e5e9dd29a882d44"
         static let apiEndpoint = "http://localhost/v1"
         
-        static let canvasCollectionID = "625e2e9586945e8bc82f"
+        static let canvasCollectionId = "625e2e9586945e8bc82f"
+        static let pixelColorFunctionId = "626f4b574d01a906d255"        
     }
 }

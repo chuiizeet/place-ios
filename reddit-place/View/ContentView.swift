@@ -43,6 +43,11 @@ struct ContentView: View {
     
     var image: UIImage?
     
+    // Timer...
+    @State private var timeRemaining = 0
+    @State private var isDelayed: Bool = false
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    
     init(
         bottomEdge: CGFloat,
         topEdge: CGFloat
@@ -102,7 +107,6 @@ struct ContentView: View {
                         .buttonStyle(.borderedProminent)
                         .controlSize(.large) // .large, .medium or .small
                         
-                        
                         Spacer()
 
                         
@@ -156,8 +160,31 @@ struct ContentView: View {
                     CanvasView(viewModel: viewModel, currentScale: $gestureHandler.scale, maxScale: maxScale)
                         .overlay(
                             TappableView { gesture in
-//                                showLogin.toggle()
-                                viewModel.computedCoords(location: gesture.location(in: gesture.view), hex: colorViewModel.selectedColor.hex, create: true)
+                                
+                                // Place a pixel
+                                if isDelayed && timeRemaining == 0 {
+                                    
+                                }
+                                
+                                let location = gesture.location(in: gesture.view)
+                                
+                                Task {
+                                    let result = await viewModel.colorAPixel(location: location, hex: colorViewModel.selectedColor.hex)
+                                    switch result {
+                                        //... nah
+                                    case .idle: break
+                                    case .placed:
+                                        print("SUCCESS - PLACED")
+                                        break
+                                    case .time:
+                                        print("FAILED - TIME")
+                                        break
+                                    case .error:
+                                        print("Error")
+                                        break
+                                    }
+                                }
+//                                viewModel.computedCoords(location: gesture.location(in: gesture.view), hex: colorViewModel.selectedColor.hex, create: true)
                             })
                 }
                 .zIndex(0)
@@ -191,6 +218,17 @@ struct ContentView: View {
                     LoginView(viewModel: authViewModel)
                 }
                 .navigationBarHidden(true)
+                .onReceive(timer) { time in
+                    guard isDelayed else { return }
+
+                    if timeRemaining > 0 {
+                        timeRemaining -= 1
+                        if timeRemaining == 0 {
+                            // Time complete
+                            isDelayed = false
+                        }
+                    }
+                }
             }
         }
         .task {
