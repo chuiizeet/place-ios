@@ -19,6 +19,7 @@ class AppwriteUtils {
     let account: Account
     let db: Database
     let functions: Functions
+    let storage: Storage
     
     // MARK: - Init
     
@@ -29,5 +30,6 @@ class AppwriteUtils {
         account = Account(client)
         db = Database(client)
         functions = Functions(client)
+        storage = Storage(client)
     }
 }

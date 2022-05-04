@@ -24,6 +24,7 @@
 		02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */; };
 		02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DC1280FDD4100D488E8 /* CanvasView.swift */; };
 		027CB05228167F2200EEADFA /* ValidationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CB05128167F2200EEADFA /* ValidationViewModel.swift */; };
+		028216332822012A003029B9 /* PixelFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028216322822012A003029B9 /* PixelFile.swift */; };
 		0288564728112729004BD018 /* TappableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288564628112729004BD018 /* TappableView.swift */; };
 		0288C57B281A2AF200E4C76D /* Popovers in Frameworks */ = {isa = PBXBuildFile; productRef = 0288C57A281A2AF200E4C76D /* Popovers */; };
 		0288C57E281A2B9600E4C76D /* ColorPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288C57D281A2B9600E4C76D /* ColorPop.swift */; };
@@ -51,6 +52,7 @@
 		02607DBE280FDC7900D488E8 /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
 		02607DC1280FDD4100D488E8 /* CanvasView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasView.swift; sourceTree = "<group>"; };
 		027CB05128167F2200EEADFA /* ValidationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValidationViewModel.swift; sourceTree = "<group>"; };
+		028216322822012A003029B9 /* PixelFile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PixelFile.swift; sourceTree = "<group>"; };
 		0288564628112729004BD018 /* TappableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TappableView.swift; sourceTree = "<group>"; };
 		0288C57D281A2B9600E4C76D /* ColorPop.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorPop.swift; sourceTree = "<group>"; };
 		0288C57F281A318900E4C76D /* ColorViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorViewModel.swift; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 			isa = PBXGroup;
 			children = (
 				02607DBB280FDBFF00D488E8 /* Pixel.swift */,
+				028216322822012A003029B9 /* PixelFile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -299,6 +302,7 @@
 				02543C64280E7AAD006F7089 /* GestureHandler.swift in Sources */,
 				0288C580281A318900E4C76D /* ColorViewModel.swift in Sources */,
 				02543C4A280E6425006F7089 /* ContentView.swift in Sources */,
+				028216332822012A003029B9 /* PixelFile.swift in Sources */,
 				02607DBC280FDBFF00D488E8 /* Pixel.swift in Sources */,
 				0288C584281A338100E4C76D /* UIColor+Extensions.swift in Sources */,
 				02543C48280E6425006F7089 /* reddit_placeApp.swift in Sources */,

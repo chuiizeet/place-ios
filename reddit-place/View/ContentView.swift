@@ -156,7 +156,8 @@ struct ContentView: View {
                     CanvasView(viewModel: viewModel, currentScale: $gestureHandler.scale, maxScale: maxScale)
                         .overlay(
                             TappableView { gesture in
-                                showLogin.toggle()
+//                                showLogin.toggle()
+                                viewModel.computedCoords(location: gesture.location(in: gesture.view), hex: colorViewModel.selectedColor.hex, create: true)
                             })
                 }
                 .zIndex(0)
@@ -194,6 +195,7 @@ struct ContentView: View {
         }
         .task {
             await authViewModel.getSessions()
+            await viewModel.fetchPixels()
         }
     }
 }
