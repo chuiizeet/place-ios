@@ -32,7 +32,9 @@ class ValidationViewModel: ObservableObject {
             let result = try await AppwriteUtils.shared.account.createSession(email: email, password: password)
             Logger.debug(result.toMap(), context: result)
             // Sucesss
-            self.user = .member
+            DispatchQueue.main.async {
+                self.user = .member
+            }
             return true
         }
         catch {

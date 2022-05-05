@@ -28,7 +28,9 @@ class CanvasViewModel: ObservableObject {
     let canvasWidth: Int = 256
     let canvasHeight: Int = 256
     
-    let canvasPixelFactor: Int = Int(UIScreen.main.scale) + 2
+    /// Pixel per pixels 👀
+    /// if canvasPixelFactor is  higher every pixels looks better (no antialiasing) but the performance in older devices will be compromised
+    let canvasPixelFactor: Int = Int(UIScreen.main.scale) + 3
     
     /// Computed canvas size
     var canvasWidthComputed: CGFloat {
@@ -41,6 +43,7 @@ class CanvasViewModel: ObservableObject {
     
     @Published var image: UIImage?
     @Published var pixelsArray: [Pixel] = [Pixel]()
+    
     
     // MARK: - Helper Functions
     
@@ -103,9 +106,28 @@ class CanvasViewModel: ObservableObject {
         
     }
     
+    func realtimePixel(doc: Doc) {
+        guard !documents.isEmpty else { return }
+        DispatchQueue.main.async {
+            self.pixelsArray.removeAll()
+            self.documents.append(doc)
+        }
+        
+        // Create imager
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
+            self.createImage { image, _ in
+                if let image = image {
+                    DispatchQueue.main.async {
+                        self.image = image
+                    }
+                }
+            }
+        }
+    }
+    
     func colorAPixel(location: CGPoint, hex: String) async -> PixelPlaceCase {
-        let x = Int(ceil((location.x / CGFloat(canvasPixelFactor))))
-        let y = Int(ceil((location.y / CGFloat(canvasPixelFactor))))
+        let x = Int(ceil((location.x / CGFloat(canvasPixelFactor)))) - 1
+        let y = Int(ceil((location.y / CGFloat(canvasPixelFactor)))) - 1
         var pixelCase = PixelPlaceCase.idle
         do {
             

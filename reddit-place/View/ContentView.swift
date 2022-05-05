@@ -182,8 +182,10 @@ struct ContentView: View {
                                         case .idle: break
                                         case .placed:
                                             print("SUCCESS - PLACED")
-                                            self.timeRemaining = 30
-                                            self.isDelayed = true
+                                            DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                                                self.timeRemaining = 30
+                                                self.isDelayed = true
+                                            }
                                             break
                                         case .time:
                                             print("FAILED - TIME")
@@ -226,6 +228,18 @@ struct ContentView: View {
                     //content
                     LoginView(viewModel: authViewModel)
                 }
+                .onAppear(perform: {
+                    _ = AppwriteUtils.shared.realtime.subscribe(channel: "collections.\(K.Appwrite.canvasCollectionId).documents", callback: { param in
+                        // Callback will be executed on all account events.
+                        
+                        if let dict = param.payload {
+                            let doc = Doc.from(map: dict)
+                            Logger.debug("Reload image", context: nil)
+                            viewModel.realtimePixel(doc: doc)
+                        }
+                        
+                    })
+                })
                 .navigationBarHidden(true)
                 .onReceive(timer) { time in
                     guard isDelayed else { return }

@@ -5,14 +5,10 @@
 //  Created by chuy g on 18/04/22.
 //
 
-
-import SwiftyBeaver
 import Appwrite
 
 class AppwriteUtils {
-    
-    // Properties
-    private let log = SwiftyBeaver.self
+
     static let shared = AppwriteUtils()
 
     private let client: Client
@@ -20,6 +16,7 @@ class AppwriteUtils {
     let db: Database
     let functions: Functions
     let storage: Storage
+    let realtime: Realtime
     
     // MARK: - Init
     
@@ -27,9 +24,11 @@ class AppwriteUtils {
         client = Client()
             .setProject(K.Appwrite.projectId)
             .setEndpoint(K.Appwrite.apiEndpoint)
+            .setSelfSigned(true)
         account = Account(client)
         db = Database(client)
         functions = Functions(client)
         storage = Storage(client)
+        realtime = Realtime(client)        
     }
 }
