@@ -8,6 +8,11 @@
 import Foundation
 import Appwrite
 
+enum User {
+    case guest
+    case member
+}
+
 class ValidationViewModel: ObservableObject {
     
     // MARK: - Properties
@@ -16,23 +21,31 @@ class ValidationViewModel: ObservableObject {
     @Published var email: String = ""
     @Published var password: String = ""
     
+    @Published var user: User = .guest
+    
     // MARK: - Helper Functions
     
     /// Try to create user
-    func signIn() async {
+    func signIn() async -> Bool {
         // Loading....
         do {
             let result = try await AppwriteUtils.shared.account.createSession(email: email, password: password)
             Logger.debug(result.toMap(), context: result)
             // Sucesss
-        }
-        catch let error as Appwrite.AppwriteError {
-            Logger.warning(error.localizedDescription, context: error)
+            self.user = .member
+            return true
         }
         catch {
+            
+            if let err = error as? AppwriteError {
+                Logger.error(err.message, context: nil)
+            }
+            
             // Error
-            Logger.error("Error: \(error)", context: error)
+            Logger.error(error.localizedDescription, context: nil)
         }
+        
+        return false
     }
     
     /// Try to create user
@@ -57,6 +70,7 @@ class ValidationViewModel: ObservableObject {
         do {
             let result = try await AppwriteUtils.shared.account.get()
             Logger.debug(result.toMap(), context: result)
+            self.user = .member
         }
         catch let error as Appwrite.AppwriteError {
             Logger.warning(error.localizedDescription, context: error)
@@ -73,10 +87,15 @@ class ValidationViewModel: ObservableObject {
             // TODO: - Report this
             let result = try await AppwriteUtils.shared.account.getSessions()
             Logger.debug(result.toMap(), context: result)
-        } catch let error as Appwrite.AppwriteError {
-            Logger.warning(error.localizedDescription, context: error)
+            DispatchQueue.main.async {
+                self.user = .member
+            }
         } catch {
-            Logger.error("Some error: \(error.localizedDescription)", context: error)
+            if let err = error as? AppwriteError {
+                Logger.error("\(err.message) - \(String(describing: err.code))", context: error)
+            } else {
+                Logger.error(error.localizedDescription, context: nil)
+            }            
         }
     }
     

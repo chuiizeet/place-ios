@@ -37,7 +37,7 @@ struct ColorView: View {
                 .shadow(color: Color.black.opacity(0.15), radius: 1.25, x: 1, y: 1)
                 .overlay(
                     Circle()
-                        .fill(viewModel.color, strokeBorder: Color.black, lineWidth: 2.5)
+                        .fill(viewModel.color, strokeBorder: Color.black, lineWidth: 1.25)
                         .frame(width: buttonColorSize, height: buttonColorSize)
                     
                     , alignment: .center

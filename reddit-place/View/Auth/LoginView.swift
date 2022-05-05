@@ -11,6 +11,8 @@ struct LoginView: View {
     
     // MARK: - Properties
     
+    @Environment(\.presentationMode) var presentationMode
+    
     @ObservedObject var viewModel: ValidationViewModel
     
     @State var showSignUp = false
@@ -67,7 +69,11 @@ struct LoginView: View {
                             showMessages = true
                         } else {
                             Task {
-                                await viewModel.signIn()
+                                let result = await viewModel.signIn()
+                                if result {
+                                    // Dismiss
+                                    presentationMode.wrappedValue.dismiss()
+                                }
                             }
                         }
                     } label: {
@@ -75,7 +81,7 @@ struct LoginView: View {
                             Spacer()
                             Text("Sign in")
                                 .font(.title2.bold())
-                                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
+//                                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                             Spacer()
                         }
                     }
@@ -84,7 +90,7 @@ struct LoginView: View {
                     .controlSize(.large)
                     .buttonStyle(.borderedProminent)
                     .padding(.vertical)
-                    .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
+//                    .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                     
                     HStack(alignment: .center, spacing: 4) {
                         Spacer()

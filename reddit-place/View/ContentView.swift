@@ -96,11 +96,15 @@ struct ContentView: View {
                         
                         Button {
                             // .. Scale
+                            if authViewModel.user == .guest {
+                                showLogin = true
+                            } else {
+                                //....
+                            }
                             
                             // .. Press a pixel
                         } label: {
-                            Text("Color a pixel")
-                                .font(.title3.bold())
+                            buttonContent()
                         }
                         .tint(colorViewModel.color)
                         .foregroundColor(colorViewModel.bgColor)
@@ -161,30 +165,35 @@ struct ContentView: View {
                         .overlay(
                             TappableView { gesture in
                                 
-                                // Place a pixel
-                                if isDelayed && timeRemaining == 0 {
+                                // user guest
+                                if authViewModel.user == .guest {
+                                    // login to pixrl
                                     
                                 }
                                 
-                                let location = gesture.location(in: gesture.view)
-                                
-                                Task {
-                                    let result = await viewModel.colorAPixel(location: location, hex: colorViewModel.selectedColor.hex)
-                                    switch result {
-                                        //... nah
-                                    case .idle: break
-                                    case .placed:
-                                        print("SUCCESS - PLACED")
-                                        break
-                                    case .time:
-                                        print("FAILED - TIME")
-                                        break
-                                    case .error:
-                                        print("Error")
-                                        break
+                                // Place a pixel
+                                if !isDelayed && timeRemaining == 0 {
+                                    let location = gesture.location(in: gesture.view)
+                                    
+                                    Task {
+                                        let result = await viewModel.colorAPixel(location: location, hex: colorViewModel.selectedColor.hex)
+                                        switch result {
+                                            //... nah
+                                        case .idle: break
+                                        case .placed:
+                                            print("SUCCESS - PLACED")
+                                            self.timeRemaining = 30
+                                            self.isDelayed = true
+                                            break
+                                        case .time:
+                                            print("FAILED - TIME")
+                                            break
+                                        case .error:
+                                            print("Error")
+                                            break
+                                        }
                                     }
                                 }
-//                                viewModel.computedCoords(location: gesture.location(in: gesture.view), hex: colorViewModel.selectedColor.hex, create: true)
                             })
                 }
                 .zIndex(0)
@@ -234,6 +243,23 @@ struct ContentView: View {
         .task {
             await authViewModel.getSessions()
             await viewModel.fetchPixels()
+        }
+    }
+    
+    // MARK: - ViewBuilders
+    
+    @ViewBuilder func buttonContent() -> some View {
+        if authViewModel.user == .guest {
+            Text("Sign in to color")
+                .font(.title3.bold())
+        } else {
+            if isDelayed && timeRemaining > 0 {
+                Text("You can place a pixel in \(timeRemaining) seconds")
+                    .font(.body.bold())
+            } else {
+                Text("Touch a pixel to color")
+                    .font(.body.bold())
+            }
         }
     }
 }

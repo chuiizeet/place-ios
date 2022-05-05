@@ -66,7 +66,7 @@ struct SignUpView: View {
                         Spacer()
                         Text("Sign Up")
                             .font(.title2.bold())
-                            .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
+//                            .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                         Spacer()
                     }
                 }
@@ -74,7 +74,7 @@ struct SignUpView: View {
                 .foregroundColor(Color(.systemBackground))
                 .controlSize(.large)
                 .buttonStyle(.borderedProminent)
-                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
+//                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                 .padding(.vertical)
                 
                 HStack(alignment: .center, spacing: 4) {
