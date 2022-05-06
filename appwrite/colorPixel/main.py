@@ -9,7 +9,8 @@ def main(request, response):
 	{		
 		'hex': String,
 		'x': Int,
-		'y': Int        
+		'y': Int,
+		'secret': String <- for fun stuff 🥴        
 	}
 	Colors allowed: #000000,#1D2B53,#7E2553,#008751,#AB5236,#5F574F,#C2C3C7,#FFFFFF,#FF004D,#FFA300,#FFEC27,#00E436,#29ADFF,#83769C,#FF77A8,#FFCCAA
 	"""
@@ -23,7 +24,7 @@ def main(request, response):
 	client.set_project(env["APPWRITE_FUNCTION_PROJECT_ID"]) # this is available by default.
 	client.set_key(env["APPWRITE_API_KEY"]) 
 	client.set_self_signed(status=True)
-
+	is_bot = True if env['BOT_SECRET'] == payload.get("secret", "whatever") else False
 	database = Database(client)		
 	user_id = env['APPWRITE_FUNCTION_USER_ID']
 	canvas_collection_id = env['CANVAS_COLLECTION_ID']
@@ -68,19 +69,22 @@ def main(request, response):
 		Query.equal('userId', user_id),
 		Query.greater('createdAt', time - delay_seconds)
 	]
-	
-	_pixels_placed = database.list_documents(
-		collection_id=pixels_placed_collection_id,
-		queries=queries,
-		limit=1
-	)['documents']
-	
+	if not is_bot:
+		_pixels_placed = database.list_documents(
+			collection_id=pixels_placed_collection_id,
+			queries=queries,
+			limit=1
+		)['documents']
+		
 
-	if (len(_pixels_placed) > 0):
-		return response.json({
-		'success': False,
-		'message': f"You can only place a pixel every {delay_seconds} seconds."
-	})
+		if (len(_pixels_placed) > 0):
+			return response.json({
+			'success': False,
+			'message': f"You can only place a pixel every {delay_seconds} seconds."
+		})
+	else:
+		user_id = 'bot'
+		print("FUNNY 😈")
 
 	# Update or create
 	try:
