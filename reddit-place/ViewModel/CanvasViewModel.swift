@@ -77,10 +77,22 @@ class CanvasViewModel: ObservableObject {
             
             let queries = [Query.greater("createdAt", value: file.createdAt)]
             
-            // TODO: - Enhance this
-            let dbResult = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionId, queries: queries, limit: 100, offset: nil, cursor: nil, cursorDirection: nil, orderAttributes: nil, orderTypes: nil)
+            /// Get all missed points
+            let dbResult = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionId, queries: queries, limit: 1, offset: nil, cursor: nil, cursorDirection: nil, orderAttributes: nil, orderTypes: nil)
             
-            for doc in dbResult.documents {
+            var items = dbResult.total
+            var dbDocuments = dbResult.documents
+                        
+            while items > 0 {
+                let res = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionId, queries: queries, limit: 100, offset: nil, cursor: dbDocuments.last?.id, cursorDirection: "before", orderAttributes: ["createdAt"], orderTypes: nil)
+                if res.total > 0 {
+                    dbDocuments.append(contentsOf: res.documents)
+                }
+                
+                items = res.documents.count
+            }
+            
+            for doc in dbDocuments {                
                 DispatchQueue.main.async {
                     self.documents.append(doc.convertTo(fromJson: Doc.from(map:)))
                 }
