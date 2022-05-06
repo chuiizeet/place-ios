@@ -40,6 +40,7 @@ struct ContentView: View {
     @State var scaleAnchor: UnitPoint = .center
     @State var accumulated = CGSize.zero
     @State var showLogin: Bool = false
+    @State var showSettings: Bool = false
     
     var image: UIImage?
     
@@ -81,6 +82,22 @@ struct ContentView: View {
                                 )
                         }
                         Spacer()
+                        Button(action: {
+                            showSettings.toggle()
+                        }) {
+                            Circle()
+                                .fill(Color.white)
+                                .frame(width: buttonSize, height: buttonSize)
+                                .shadow(color: Color.black.opacity(0.15), radius: 1.25, x: 1, y: 1)
+                                .overlay(
+                                    Image(systemName: "gearshape.fill")
+                                        .resizable()
+                                        .foregroundColor(Color.black)
+                                        .frame(width: buttonImageSize, height: buttonImageSize)
+                                    
+                                    , alignment: .center
+                                )
+                        }
                     }
                     .padding(.horizontal, 16)
                     Spacer()
@@ -197,6 +214,12 @@ struct ContentView: View {
                                     }
                                 }
                             })
+                        .sheet(isPresented: $showSettings) {
+                            //dismiss
+                        } content: {
+                            //content
+                            SettingsView(viewModel: authViewModel)
+                        }
                 }
                 .zIndex(0)
                 .ignoresSafeArea(.all, edges: [.top, .bottom])
@@ -255,7 +278,7 @@ struct ContentView: View {
             }
         }
         .task {
-            await authViewModel.getSessions()
+            await authViewModel.verifyUser()
             await viewModel.fetchPixels()
         }
     }
@@ -298,11 +321,11 @@ extension ContentView {
     var magnificationGesture: some Gesture {
         MagnificationGesture()
         
-            .onChanged {
-                gestureHandler.onMagnificationGestureChanged(
-                    value: $0, scaleMaximum: maxScale
-                )
-            }
+//            .onChanged {
+//                gestureHandler.onMagnificationGestureChanged(
+//                    value: $0, scaleMaximum: maxScale
+//                )
+//            }
         //            .onEnded {
         //                gestureHandler.onMagnificationGestureEnded(
         //                    value: $0, scaleMaximum: maxScale

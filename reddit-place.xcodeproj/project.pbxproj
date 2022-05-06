@@ -32,6 +32,7 @@
 		0288C582281A324400E4C76D /* Color+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288C581281A324400E4C76D /* Color+Extensions.swift */; };
 		0288C584281A338100E4C76D /* UIColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288C583281A338100E4C76D /* UIColor+Extensions.swift */; };
 		028F75F128192151009E2753 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028F75F028192151009E2753 /* HomeView.swift */; };
+		02CDA2DF2825D1A50044AEA0 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02CDA2DE2825D1A50044AEA0 /* SettingsView.swift */; };
 		02DE877328126FA3004FEB09 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02DE877228126FA3004FEB09 /* WebView.swift */; };
 /* End PBXBuildFile section */
 
@@ -60,6 +61,7 @@
 		0288C583281A338100E4C76D /* UIColor+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extensions.swift"; sourceTree = "<group>"; };
 		028F75EE2818BCE9009E2753 /* sdk-for-apple */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = "sdk-for-apple"; path = "../../sdk-for-apple"; sourceTree = "<group>"; };
 		028F75F028192151009E2753 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		02CDA2DE2825D1A50044AEA0 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		02DE877228126FA3004FEB09 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -178,6 +180,7 @@
 		02607DC0280FDD2A00D488E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				02CDA2DD2825D19B0044AEA0 /* Settings */,
 				0288C57C281A2B8C00E4C76D /* Colors */,
 				02142A0528161B410039B43B /* Auth */,
 				02803032281372CF0029C879 /* Canvas */,
@@ -202,6 +205,14 @@
 				0288C57D281A2B9600E4C76D /* ColorPop.swift */,
 			);
 			path = Colors;
+			sourceTree = "<group>";
+		};
+		02CDA2DD2825D19B0044AEA0 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				02CDA2DE2825D1A50044AEA0 /* SettingsView.swift */,
+			);
+			path = Settings;
 			sourceTree = "<group>";
 		};
 		02DE877128126F8E004FEB09 /* WebView */ = {
@@ -313,6 +324,7 @@
 				0288C582281A324400E4C76D /* Color+Extensions.swift in Sources */,
 				02543C60280E6809006F7089 /* kconstants.swift in Sources */,
 				0288564728112729004BD018 /* TappableView.swift in Sources */,
+				02CDA2DF2825D1A50044AEA0 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

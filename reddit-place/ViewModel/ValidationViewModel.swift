@@ -23,6 +23,8 @@ class ValidationViewModel: ObservableObject {
     
     @Published var user: User = .guest
     
+    var currrentEmail = ""
+    
     // MARK: - Helper Functions
     
     /// Try to create user
@@ -34,7 +36,9 @@ class ValidationViewModel: ObservableObject {
             // Sucesss
             DispatchQueue.main.async {
                 self.user = .member
+                self.currrentEmail = self.email.lowercased()
             }
+            
             return true
         }
         catch {
@@ -56,7 +60,9 @@ class ValidationViewModel: ObservableObject {
         do {
             let result = try await AppwriteUtils.shared.account.create(userId: "unique()", email: email, password: password, name: nickname)
             Logger.debug(result.toMap(), context: result)
+            
             // Sucesss
+            
         }
         catch let error as Appwrite.AppwriteError {
             Logger.warning(error.localizedDescription, context: error)
@@ -67,12 +73,30 @@ class ValidationViewModel: ObservableObject {
         }
     }
     
+    func logOut() async {
+        do {
+            let _ = try await AppwriteUtils.shared.account.deleteSessions()
+            
+        } catch {
+            if let err = error as? Appwrite.AppwriteError {
+                Logger.warning("\(err.message) - \(String(describing: err.code))", context: nil)
+            } else {
+                Logger.error(error.localizedDescription, context: nil)
+            }
+        }
+        
+    }
+    
     /// Verify is an user is currently 
     func verifyUser() async {
         do {
             let result = try await AppwriteUtils.shared.account.get()
             Logger.debug(result.toMap(), context: result)
-            self.user = .member
+            DispatchQueue.main.async {
+                self.user = .member
+                self.currrentEmail = result.email.lowercased()
+            }
+            
         }
         catch let error as Appwrite.AppwriteError {
             Logger.warning(error.localizedDescription, context: error)
