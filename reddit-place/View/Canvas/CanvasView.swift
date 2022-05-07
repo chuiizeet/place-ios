@@ -68,7 +68,8 @@ struct CanvasView: View {
 //                    }
                 }
         } else {
-            Color.black
+            // Loading
+            Text("Loading")
         }
     }
     

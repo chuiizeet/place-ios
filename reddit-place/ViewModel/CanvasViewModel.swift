@@ -84,11 +84,11 @@ class CanvasViewModel: ObservableObject {
             var dbDocuments = dbResult.documents
                         
             while items > 0 {
-                let res = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionId, queries: queries, limit: 100, offset: nil, cursor: dbDocuments.last?.id, cursorDirection: "before", orderAttributes: ["createdAt"], orderTypes: nil)
+                let res = try await AppwriteUtils.shared.db.listDocuments(collectionId: K.Appwrite.canvasCollectionId, queries: queries, limit: 100, offset: nil, cursor: dbDocuments.last?.id, cursorDirection: nil, orderAttributes: ["createdAt"], orderTypes: nil)
                 if res.total > 0 {
                     dbDocuments.append(contentsOf: res.documents)
                 }
-                
+                                                
                 items = res.documents.count
             }
             
