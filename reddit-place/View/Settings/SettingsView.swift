@@ -10,6 +10,7 @@ import SwiftUI
 struct SettingsView: View {
     
     @ObservedObject var viewModel: ValidationViewModel
+    @ObservedObject var gestureHandler: GestureHandler
     
     @State var showAlert = false
     
@@ -28,6 +29,27 @@ struct SettingsView: View {
                         accountLbl()
                     }
                 }
+                
+                Section(header: Text("Application")) {
+                    
+                        Menu("Zoom factor") {
+                            Button("0.25", action: {
+                                gestureHandler.set(scaleFactor: 0.25)
+                            })
+                            Button("0.5", action: {
+                                gestureHandler.set(scaleFactor: 0.5)
+                            })
+                            Button("0.75", action:{
+                                gestureHandler.set(scaleFactor: 0.75)
+                            })
+                            Button("1.0", action: {
+                                gestureHandler.set(scaleFactor: 1.0)
+                            })
+                        }
+                        .foregroundColor(Color(.label))
+
+                }
+                
                 Section(header: Text("Information"), footer: Text("This app was made with ❤️ by Jesús Guerra powered by Appwrite")) {
                     
                     // Code ...

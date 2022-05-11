@@ -8,6 +8,10 @@
 import SwiftUI
 
 final class GestureHandler: ObservableObject {
+    
+    /// Change this for enhance navigation
+    @Published var scaleFactor: Double = 1.0
+    
     @Published var scaleAnchor: UnitPoint = .center
     @Published var scale: Double = 0.25
     @Published var offset: CGSize = .zero
@@ -49,6 +53,13 @@ final class GestureHandler: ObservableObject {
     
     func plusScale(scale: Double, maximum: Double) {
         setScale(scale: scale, maximum: maximum)
+    }
+    
+    // Change scale factor
+    func set(scaleFactor: Double) {
+        DispatchQueue.main.async {
+            self.scaleFactor = scaleFactor
+        }
     }
 
     func onSingleTapGestureEnded(

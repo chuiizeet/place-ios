@@ -22,7 +22,7 @@ struct ContentView: View {
     @StateObject private var colorViewModel = ColorViewModel()    
     
     private let baseScale: Double = 0.15
-    private let scaleFactor: Double = 1.0
+    
     private let maxScale: Double = 20.0
     
     // Butons...
@@ -133,7 +133,7 @@ struct ContentView: View {
                         
                         // Zoom in
                         Button(action: {
-                            gestureHandler.plusScale(scale: gestureHandler.scale + scaleFactor, maximum: maxScale)
+                            gestureHandler.plusScale(scale: gestureHandler.scale + gestureHandler.scaleFactor, maximum: maxScale)
                         }) {
                             Circle()
                                 .fill(Color.white)
@@ -151,7 +151,7 @@ struct ContentView: View {
                         
                         // Zoom out
                         Button(action: {
-                            gestureHandler.plusScale(scale: gestureHandler.scale - scaleFactor, maximum: maxScale)
+                            gestureHandler.plusScale(scale: gestureHandler.scale - gestureHandler.scaleFactor, maximum: maxScale)
                         }) {
                             Circle()
                                 .fill(Color.white)
@@ -218,7 +218,7 @@ struct ContentView: View {
                             //dismiss
                         } content: {
                             //content
-                            SettingsView(viewModel: authViewModel)
+                            SettingsView(viewModel: authViewModel, gestureHandler: gestureHandler)
                         }
                 }
                 .zIndex(0)
