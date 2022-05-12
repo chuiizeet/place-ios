@@ -32,9 +32,17 @@ struct reddit_placeApp: App {
     
     @UIApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
     
+    @AppStorage(K.UserDefaultsKeys.isOnboarding) var isOnboarding: Bool = true
+    
     var body: some Scene {
         WindowGroup {
-            HomeView()
+            if isOnboarding {
+                OnboardingView()
+                
+            } else {
+                HomeView()
+            }
+            
         }
     }
 }

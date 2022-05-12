@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		02142A0728161B560039B43B /* LoginView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02142A0628161B560039B43B /* LoginView.swift */; };
 		02142A0928165F580039B43B /* SignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02142A0828165F580039B43B /* SignUpView.swift */; };
+		02176650282CA891000D22F1 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0217664F282CA891000D22F1 /* OnboardingView.swift */; };
+		02176652282CA8BC000D22F1 /* OnboardingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02176651282CA8BC000D22F1 /* OnboardingCard.swift */; };
+		02176655282CA93D000D22F1 /* OnboardingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02176654282CA93D000D22F1 /* OnboardingData.swift */; };
 		02543C48280E6425006F7089 /* reddit_placeApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C47280E6425006F7089 /* reddit_placeApp.swift */; };
 		02543C4A280E6425006F7089 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02543C49280E6425006F7089 /* ContentView.swift */; };
 		02543C4C280E6426006F7089 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 02543C4B280E6426006F7089 /* Assets.xcassets */; };
@@ -39,6 +42,9 @@
 /* Begin PBXFileReference section */
 		02142A0628161B560039B43B /* LoginView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginView.swift; sourceTree = "<group>"; };
 		02142A0828165F580039B43B /* SignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpView.swift; sourceTree = "<group>"; };
+		0217664F282CA891000D22F1 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		02176651282CA8BC000D22F1 /* OnboardingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCard.swift; sourceTree = "<group>"; };
+		02176654282CA93D000D22F1 /* OnboardingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingData.swift; sourceTree = "<group>"; };
 		02543C44280E6425006F7089 /* reddit-place.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "reddit-place.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		02543C47280E6425006F7089 /* reddit_placeApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = reddit_placeApp.swift; sourceTree = "<group>"; };
 		02543C49280E6425006F7089 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -86,6 +92,24 @@
 				02142A0828165F580039B43B /* SignUpView.swift */,
 			);
 			path = Auth;
+			sourceTree = "<group>";
+		};
+		0217664E282CA888000D22F1 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				02176653282CA935000D22F1 /* Utils */,
+				0217664F282CA891000D22F1 /* OnboardingView.swift */,
+				02176651282CA8BC000D22F1 /* OnboardingCard.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		02176653282CA935000D22F1 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				02176654282CA93D000D22F1 /* OnboardingData.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		02543C3B280E6425006F7089 = {
@@ -180,6 +204,7 @@
 		02607DC0280FDD2A00D488E8 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				0217664E282CA888000D22F1 /* Onboarding */,
 				02CDA2DD2825D19B0044AEA0 /* Settings */,
 				0288C57C281A2B8C00E4C76D /* Colors */,
 				02142A0528161B410039B43B /* Auth */,
@@ -307,6 +332,7 @@
 				0288C57E281A2B9600E4C76D /* ColorPop.swift in Sources */,
 				02607DBF280FDC7900D488E8 /* CGFloat+Extensions.swift in Sources */,
 				02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */,
+				02176652282CA8BC000D22F1 /* OnboardingCard.swift in Sources */,
 				027CB05228167F2200EEADFA /* ValidationViewModel.swift in Sources */,
 				02543C66280E7AC5006F7089 /* DeviceUtil.swift in Sources */,
 				02543C57280E6772006F7089 /* AppwriteUtils.swift in Sources */,
@@ -323,7 +349,9 @@
 				028F75F128192151009E2753 /* HomeView.swift in Sources */,
 				0288C582281A324400E4C76D /* Color+Extensions.swift in Sources */,
 				02543C60280E6809006F7089 /* kconstants.swift in Sources */,
+				02176655282CA93D000D22F1 /* OnboardingData.swift in Sources */,
 				0288564728112729004BD018 /* TappableView.swift in Sources */,
+				02176650282CA891000D22F1 /* OnboardingView.swift in Sources */,
 				02CDA2DF2825D1A50044AEA0 /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -16,4 +16,8 @@ struct K {
         static let canvasCollectionId = "625e2e9586945e8bc82f"
         static let pixelColorFunctionId = "626f4b574d01a906d255"        
     }
+    
+    struct UserDefaultsKeys {
+        static let isOnboarding = "isOnboarding"
+    }
 }
