@@ -85,8 +85,7 @@ class ValidationViewModel: ObservableObject {
     
     func logOut() async {
         do {
-            // MARK: - TODO: Maybe an error?
-            /// The sessions are deleted successfully but throws an error.
+            // MARK: - https://github.com/appwrite/appwrite/issues/3083
             /// Exception: The data couldn’t be read because it isn’t in the correct format.
             let _ = try await AppwriteUtils.shared.account.deleteSessions()
             DispatchQueue.main.async {
@@ -100,6 +99,7 @@ class ValidationViewModel: ObservableObject {
                 Logger.error(error.localizedDescription, context: nil)
             }
             
+            /// Changes state anyway
             DispatchQueue.main.async {
                 self.user = .guest
             }
