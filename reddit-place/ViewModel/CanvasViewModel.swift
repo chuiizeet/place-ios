@@ -63,9 +63,10 @@ class CanvasViewModel: ObservableObject {
             
             Logger.debug(id, context: nil)
             
-            // TODO: - Raise an error
+            // MARK: - fix incoming: https://github.com/appwrite/sdk-generator/pull/438/files
 //            let x = try await AppwriteUtils.shared.storage.getFileDownload(bucketId: "pixels", fileId: "6271c20295079e717848")
-
+            
+            /// My approach for get the file
             let url = URL(string: "\(K.Appwrite.apiEndpoint)/storage/buckets/\(bucketId)/files/\(id)/download?project=\(K.Appwrite.projectId)" )
             
             let file = try await FileLoader().downloadFile(from: url!)
@@ -73,8 +74,8 @@ class CanvasViewModel: ObservableObject {
             DispatchQueue.main.async {
                 self.documents = file.docs
             }
-            // Get lost pixels
             
+            // Get lost pixels
             let queries = [Query.greater("createdAt", value: file.createdAt)]
             
             /// Get all missed points
@@ -287,31 +288,9 @@ class CanvasViewModel: ObservableObject {
                 intent: .absoluteColorimetric
                 )
                 else { return completionHandler(nil, "Error weird") }
-//            let image = UIImage(cgImage: cgim, scale: UIScreen.main.scale, orientation: .up)
             completionHandler(UIImage(cgImage: cgim), nil)
         }
     }
-    
-//    /// Get the pixel index from user Touch location
-//    func setNewPixelFromLocation(_ location: CGPoint) {
-//        
-//        let x: Int = Int(location.x)
-//        let y: Int = Int(location.y)
-//        guard let image = image else {
-//            Logger.error("Image has not been processed yet")
-//            return
-//        }
-//
-//        let pixelData = image.cgImage!.dataProvider!.data
-//        let _: UnsafePointer<UInt8> = CFDataGetBytePtr(pixelData)
-//        
-//        let canvasWidthNormalize: Int = canvasWidth * canvasPixelFactor
-//
-//        let pixelIndex: Int = ((canvasWidthNormalize * y) + x)
-//        
-////        changeImage(pixel: pixelIndex)
-//    }
-
 }
 
 struct FileLoader {

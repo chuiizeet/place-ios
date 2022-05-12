@@ -58,7 +58,15 @@ struct SignUpView: View {
                         showMessages = true
                     } else {
                         Task {
-                            await viewModel.signUp()
+                            let status = try? await viewModel.signUp()
+                            if let success = status {
+                                if success == .success {
+                                    // Show cool message in future
+                                    DispatchQueue.main.async(execute: {
+                                        self.showSignUp = false
+                                    })
+                                }
+                            }
                         }                        
                     }
                 } label: {
@@ -66,7 +74,6 @@ struct SignUpView: View {
                         Spacer()
                         Text("Sign Up")
                             .font(.title2.bold())
-//                            .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                         Spacer()
                     }
                 }
@@ -74,7 +81,6 @@ struct SignUpView: View {
                 .foregroundColor(Color(.systemBackground))
                 .controlSize(.large)
                 .buttonStyle(.borderedProminent)
-//                .opacity(viewModel.isLoginComplete() ? 1.0 : 0.5)
                 .padding(.vertical)
                 
                 HStack(alignment: .center, spacing: 4) {

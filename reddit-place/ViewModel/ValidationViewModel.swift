@@ -13,6 +13,12 @@ enum User {
     case member
 }
 
+enum SignUpStatus {
+    case idle
+    case success
+    case error
+}
+
 class ValidationViewModel: ObservableObject {
     
     // MARK: - Properties
@@ -55,13 +61,16 @@ class ValidationViewModel: ObservableObject {
     }
     
     /// Try to create user
-    func signUp() async {
-        // Loading....
+    func signUp() async throws -> SignUpStatus {
+        
+        var signUpStatus = SignUpStatus.idle
+        
         do {
             let result = try await AppwriteUtils.shared.account.create(userId: "unique()", email: email, password: password, name: nickname)
             Logger.debug(result.toMap(), context: result)
             
             // Sucesss
+            signUpStatus = .success
             
         }
         catch let error as Appwrite.AppwriteError {
@@ -71,17 +80,28 @@ class ValidationViewModel: ObservableObject {
             // Error
             Logger.error("Error: \(error)", context: error)
         }
+        return signUpStatus
     }
     
     func logOut() async {
         do {
+            // MARK: - TODO: Maybe an error?
+            /// The sessions are deleted successfully but throws an error.
+            /// Exception: The data couldn’t be read because it isn’t in the correct format.
             let _ = try await AppwriteUtils.shared.account.deleteSessions()
+            DispatchQueue.main.async {
+                self.user = .guest
+            }
             
         } catch {
             if let err = error as? Appwrite.AppwriteError {
                 Logger.warning("\(err.message) - \(String(describing: err.code))", context: nil)
             } else {
                 Logger.error(error.localizedDescription, context: nil)
+            }
+            
+            DispatchQueue.main.async {
+                self.user = .guest
             }
         }
         

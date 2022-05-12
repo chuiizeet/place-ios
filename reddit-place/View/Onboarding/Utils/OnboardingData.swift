@@ -15,7 +15,7 @@ struct OnboardingData: Hashable, Identifiable {
     let secondaryText: String
 
     static let list: [OnboardingData] = [
-        OnboardingData(id: 0, backgroundImage: "bg", objectImage: "welcome", primaryText: "¡Hello 👋!", secondaryText: "Welcome to Place, a r/place canvas clone made with **Appwrite** and SwiftUI. 😄"),
+        OnboardingData(id: 0, backgroundImage: "bg", objectImage: "welcome", primaryText: "¡Hello 👋!", secondaryText: "Welcome to Place, a r/place canvas clone made with Appwrite and SwiftUI. 😄"),
         
         OnboardingData(id: 1, backgroundImage: "bg", objectImage: "time", primaryText: "Instructions 😃", secondaryText: "You can place a pixel every 30 seconds, that's all. 😎"),
         
