@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import Logging
+import Drops
 
 struct ContentView: View {
     
@@ -49,6 +49,21 @@ struct ContentView: View {
     @State private var isDelayed: Bool = false
     let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
     
+    // Drops notifications
+    let dropTime = Drop(
+        title: "You can only place a pixel every 30 seconds 🙂",
+        subtitle: "",
+        icon: UIImage(systemName: "timer"),
+        action: .init {
+            //...
+        },
+        position: .top,
+        duration: 4.0,
+        accessibility: "Alert: Title, Subtitle"
+    )
+    
+    
+    
     init(
         bottomEdge: CGFloat,
         topEdge: CGFloat
@@ -58,6 +73,19 @@ struct ContentView: View {
     }
     
     var body: some View {
+        /// Tap notification for open sign in
+        let dropGuest = Drop(
+            title: "Only members are allowed to place pixels 🙂",
+            subtitle: "Tap to sign in",
+            icon: UIImage(systemName: "person.fill.questionmark"),
+            action: .init {
+                Drops.hideCurrent()
+                showLogin = true
+            },
+            position: .top,
+            duration: 4.0,
+            accessibility: "Alert: Title, Subtitle"
+        )
         NavigationView {
             ZStack {
                 // Controls...
@@ -185,7 +213,8 @@ struct ContentView: View {
                                 // user guest
                                 if authViewModel.user == .guest {
                                     // login to pixrl
-                                    
+                                    Drops.hideCurrent()
+                                    Drops.show(dropGuest)
                                 }
                                 
                                 // Place a pixel
@@ -206,12 +235,17 @@ struct ContentView: View {
                                             break
                                         case .time:
                                             print("FAILED - TIME")
+                                            Drops.hideCurrent()
+                                            Drops.show(dropTime)
                                             break
                                         case .error:
                                             print("Error")
                                             break
                                         }
                                     }
+                                } else {
+                                    Drops.hideCurrent()
+                                    Drops.show(dropTime)
                                 }
                             })
                         .sheet(isPresented: $showSettings) {

@@ -11,6 +11,15 @@
         }
       },
       {
+        "package": "Drops",
+        "repositoryURL": "https://github.com/omaralbeik/Drops",
+        "state": {
+          "branch": null,
+          "revision": "6b92e725fd2cc392d8fac29270751d1fa8e3480b",
+          "version": "1.4.0"
+        }
+      },
+      {
         "package": "Popovers",
         "repositoryURL": "https://github.com/aheze/Popovers",
         "state": {

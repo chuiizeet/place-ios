@@ -28,6 +28,7 @@
 		02607DC2280FDD4100D488E8 /* CanvasView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 02607DC1280FDD4100D488E8 /* CanvasView.swift */; };
 		027CB05228167F2200EEADFA /* ValidationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 027CB05128167F2200EEADFA /* ValidationViewModel.swift */; };
 		028216332822012A003029B9 /* PixelFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 028216322822012A003029B9 /* PixelFile.swift */; };
+		02841BCB282D005200281175 /* Drops in Frameworks */ = {isa = PBXBuildFile; productRef = 02841BCA282D005200281175 /* Drops */; };
 		0288564728112729004BD018 /* TappableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288564628112729004BD018 /* TappableView.swift */; };
 		0288C57B281A2AF200E4C76D /* Popovers in Frameworks */ = {isa = PBXBuildFile; productRef = 0288C57A281A2AF200E4C76D /* Popovers */; };
 		0288C57E281A2B9600E4C76D /* ColorPop.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0288C57D281A2B9600E4C76D /* ColorPop.swift */; };
@@ -77,6 +78,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				0288C57B281A2AF200E4C76D /* Popovers in Frameworks */,
+				02841BCB282D005200281175 /* Drops in Frameworks */,
 				02543C5A280E67B0006F7089 /* Appwrite in Frameworks */,
 				02543C5D280E67E1006F7089 /* SwiftyBeaver in Frameworks */,
 			);
@@ -268,6 +270,7 @@
 				02543C59280E67B0006F7089 /* Appwrite */,
 				02543C5C280E67E1006F7089 /* SwiftyBeaver */,
 				0288C57A281A2AF200E4C76D /* Popovers */,
+				02841BCA282D005200281175 /* Drops */,
 			);
 			productName = "reddit-place";
 			productReference = 02543C44280E6425006F7089 /* reddit-place.app */;
@@ -301,6 +304,7 @@
 				02543C58280E67B0006F7089 /* XCRemoteSwiftPackageReference "sdk-for-apple" */,
 				02543C5B280E67E1006F7089 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */,
 				0288C579281A2AF200E4C76D /* XCRemoteSwiftPackageReference "Popovers" */,
+				02841BC9282D005200281175 /* XCRemoteSwiftPackageReference "Drops" */,
 			);
 			productRefGroup = 02543C45280E6425006F7089 /* Products */;
 			projectDirPath = "";
@@ -575,6 +579,14 @@
 				kind = branch;
 			};
 		};
+		02841BC9282D005200281175 /* XCRemoteSwiftPackageReference "Drops" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/omaralbeik/Drops";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
 		0288C579281A2AF200E4C76D /* XCRemoteSwiftPackageReference "Popovers" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/aheze/Popovers";
@@ -595,6 +607,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 02543C5B280E67E1006F7089 /* XCRemoteSwiftPackageReference "SwiftyBeaver" */;
 			productName = SwiftyBeaver;
+		};
+		02841BCA282D005200281175 /* Drops */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 02841BC9282D005200281175 /* XCRemoteSwiftPackageReference "Drops" */;
+			productName = Drops;
 		};
 		0288C57A281A2AF200E4C76D /* Popovers */ = {
 			isa = XCSwiftPackageProductDependency;

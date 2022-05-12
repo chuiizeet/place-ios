@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Drops
 
 struct LoginView: View {
     
@@ -71,8 +72,26 @@ struct LoginView: View {
                             Task {
                                 let result = await viewModel.signIn()
                                 if result {
+                                    // Notification
+                                    let drop = Drop(
+                                        title: "Welcome \(viewModel.email) 😄",
+                                        subtitle: "",
+                                        icon: UIImage(systemName: "person.fill"),
+                                        action: .init {
+                                            //...
+                                            Drops.hideCurrent()
+                                        },
+                                        position: .top,
+                                        duration: 4.0,
+                                        accessibility: "Alert: Title, Subtitle"
+                                    )
+                                    Drops.hideCurrent()
+                                    Drops.show(drop)
+                                    
                                     // Dismiss
-                                    presentationMode.wrappedValue.dismiss()
+                                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.25) {
+                                        self.presentationMode.wrappedValue.dismiss()
+                                    }
                                 }
                             }
                         }

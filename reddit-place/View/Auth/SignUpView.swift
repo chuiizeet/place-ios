@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Drops
 
 struct SignUpView: View {
     
@@ -15,6 +16,18 @@ struct SignUpView: View {
     
     @Binding var showSignUp: Bool
     @State var showMessages = false
+        
+    // Notifications...
+    let dropSuccess = Drop(
+        title: "Account created successfully 🥳",
+        icon: UIImage(systemName: "checkmark.circle.fill"),
+        action: .init {
+            Drops.hideCurrent()
+        },
+        position: .top,
+        duration: 4.0,
+        accessibility: "Alert: Title, Subtitle"
+    )
     
     var body: some View {
         ScrollView(showsIndicators: false) {
@@ -62,6 +75,7 @@ struct SignUpView: View {
                             if let success = status {
                                 if success == .success {
                                     // Show cool message in future
+                                    Drops.show(dropSuccess)
                                     DispatchQueue.main.async(execute: {
                                         self.showSignUp = false
                                     })
